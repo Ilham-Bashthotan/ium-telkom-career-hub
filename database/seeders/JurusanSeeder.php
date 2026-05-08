@@ -2,16 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Jurusan;
 
 class JurusanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $jurusans = [
+            ['kode_jurusan' => 'PPLG', 'nama_jurusan' => 'Pengembangan Perangkat Lunak dan Gim'],
+            ['kode_jurusan' => 'TJKT', 'nama_jurusan' => 'Teknik Jaringan Komputer dan Telekomunikasi'],
+            ['kode_jurusan' => 'DKV', 'nama_jurusan' => 'Desain Komunikasi Visual'],
+        ];
+
+        foreach ($jurusans as $jurusan) {
+            Jurusan::create($jurusan);
+        }
     }
 }
