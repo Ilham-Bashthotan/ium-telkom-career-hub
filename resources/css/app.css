@@ -1,11 +1,86 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --color-brand-50: #fff1f1;
+  --color-brand-100: #ffe1e1;
+  --color-brand-200: #ffc4c4;
+  --color-brand-300: #ff9999;
+  --color-brand-400: #ff6666;
+  --color-brand-500: #E3000F;
+  --color-brand-600: #cc000d;
+  --color-brand-700: #a3000a;
+  --color-brand-800: #7a0008;
+  --color-brand-900: #520005;
+}
+
+:root {
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --line: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --brand: #E3000F;
+  --brand-light: #fff1f2;
+  --brand-dark: #9f1239;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius: 12px;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased font-sans;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+  }
+}
+
+/* Premium UI Components */
+@layer components {
+  .premium-card { 
+    @apply bg-white border border-gray-100 shadow-sm transition-all duration-300;
+    border-radius: var(--radius);
+  }
+  .premium-card:hover {
+    @apply shadow-md -translate-y-0.5 border-gray-200;
+  }
+  
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  .btn-primary { 
+    @apply bg-brand text-white font-bold py-2 px-6 rounded-xl shadow-lg shadow-brand/20 hover:bg-brand-dark hover:shadow-xl hover:shadow-brand/30 transition-all active:scale-[0.98]; 
+    border: none;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-700 font-bold py-2 px-6 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all active:scale-[0.98];
+  }
+
+  .form-label { @apply block mb-1.5 text-xs text-gray-500 uppercase font-bold tracking-wider; }
+  .form-input, .form-select { 
+    @apply w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50/50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all; 
+  }
+
+  .pill { 
+    @apply inline-flex items-center px-3 py-1 rounded-full bg-brand-light text-brand text-[10px] font-bold uppercase tracking-tight; 
+  }
+  
+  .pill-gray {
+    @apply inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-tight;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }

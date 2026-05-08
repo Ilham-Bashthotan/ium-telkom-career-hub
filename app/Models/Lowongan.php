@@ -25,6 +25,11 @@ class Lowongan extends Model
         'admin_id',
     ];
 
+    protected $casts = [
+        'tanggal_posting' => 'datetime',
+        'tanggal_expired' => 'datetime',
+    ];
+
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id', 'perusahaan_id');
