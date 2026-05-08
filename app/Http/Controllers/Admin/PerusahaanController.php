@@ -11,12 +11,12 @@ class PerusahaanController extends Controller
     public function index()
     {
         $perusahaans = Perusahaan::latest()->paginate(10);
-        return view('admin.mitra', compact('perusahaans'));
+        return view('admin.mitra.index', compact('perusahaans'));
     }
 
     public function create()
     {
-        return view('admin.mitra-tambah');
+        return view('admin.mitra.create');
     }
 
     public function store(Request $request)
@@ -36,13 +36,13 @@ class PerusahaanController extends Controller
     public function show($id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
-        return view('admin.mitra-detail', compact('perusahaan'));
+        return view('admin.mitra.show', compact('perusahaan'));
     }
 
     public function edit($id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
-        return view('admin.mitra-edit', compact('perusahaan'));
+        return view('admin.mitra.edit', compact('perusahaan'));
     }
 
     public function update(Request $request, $id)

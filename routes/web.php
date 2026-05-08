@@ -43,6 +43,9 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    });
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     Route::resource('lowongan', AdminLowonganController::class);

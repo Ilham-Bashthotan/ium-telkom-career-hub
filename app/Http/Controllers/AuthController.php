@@ -47,17 +47,20 @@ class AuthController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'no_hp' => 'nullable|string|max:20',
-            'is_alumni' => 'boolean',
+            'no_hp' => 'required|string|max:20',
+            'is_alumni' => 'required|boolean',
+            'status_pekerjaan' => 'nullable|string',
+            'tempat_kerja' => 'nullable|string|max:255',
         ]);
 
         $user = User::create([
             'nama_lengkap' => $validated['nama_lengkap'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'no_hp' => $validated['no_hp'] ?? null,
-            'is_alumni' => $request->has('is_alumni') ? true : false,
-            'status_pekerjaan' => 'belum_bekerja',
+            'no_hp' => $validated['no_hp'],
+            'is_alumni' => $validated['is_alumni'],
+            'status_pekerjaan' => $validated['status_pekerjaan'] ?? 'belum_bekerja',
+            'tempat_kerja' => $validated['tempat_kerja'] ?? null,
         ]);
 
         Auth::guard('web')->login($user);

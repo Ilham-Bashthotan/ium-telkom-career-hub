@@ -14,14 +14,14 @@ class LowonganController extends Controller
     public function index()
     {
         $lowongans = Lowongan::with(['perusahaan', 'jurusan'])->latest('tanggal_posting')->paginate(10);
-        return view('admin.lowongan', compact('lowongans'));
+        return view('admin.lowongan.index', compact('lowongans'));
     }
 
     public function create()
     {
         $perusahaans = Perusahaan::all();
         $jurusans = Jurusan::all();
-        return view('admin.lowongan-tambah', compact('perusahaans', 'jurusans'));
+        return view('admin.lowongan.create', compact('perusahaans', 'jurusans'));
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class LowonganController extends Controller
     public function show($id)
     {
         $lowongan = Lowongan::with(['perusahaan', 'jurusan', 'admin'])->findOrFail($id);
-        return view('admin.lowongan-detail', compact('lowongan'));
+        return view('admin.lowongan.show', compact('lowongan'));
     }
 
     public function edit($id)
@@ -59,7 +59,7 @@ class LowonganController extends Controller
         $lowongan = Lowongan::findOrFail($id);
         $perusahaans = Perusahaan::all();
         $jurusans = Jurusan::all();
-        return view('admin.lowongan-edit', compact('lowongan', 'perusahaans', 'jurusans'));
+        return view('admin.lowongan.edit', compact('lowongan', 'perusahaans', 'jurusans'));
     }
 
     public function update(Request $request, $id)
