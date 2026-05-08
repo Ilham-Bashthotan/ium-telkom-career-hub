@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lowongan Kerja — Telkom Career Hub Admin</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+  <div class="shell">
+    <div id="sidebar-placeholder"></div>
+    <div class="main">
+      <div id="topbar-placeholder"></div>
+      <div class="content">
+        <div class="action-row">
+          <a href="lowongan-tambah.html" class="btn btn-primary">+ Tambah Lowongan</a>
+        </div>
+        <div class="search-row">
+          <input class="search-input" placeholder="Cari posisi / perusahaan...">
+          <select class="select-input" style="width:130px">
+            <option>Semua Jurusan</option>
+            <option>DKV</option>
+            <option>Animasi</option>
+            <option>TJKT</option>
+            <option>PPLG</option>
+          </select>
+          <select class="select-input" style="width:110px">
+            <option>Semua Status</option>
+            <option>Aktif</option>
+            <option>Draft</option>
+            <option>Nonaktif</option>
+          </select>
+          <div class="btn">Filter</div>
+        </div>
+        <div class="card" style="padding:0">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Posisi</th>
+                <th>Perusahaan</th>
+                <th>Jurusan</th>
+                <th>Sumber</th>
+                <th>Status</th>
+                <th>Expired</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Frontend Developer</td>
+                <td>PT Telkom Indonesia</td>
+                <td><span class="pill">PPLG</span></td>
+                <td>Manual</td>
+                <td><span class="pill">Aktif</span></td>
+                <td>30 Mei 2026</td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Motion Designer</td>
+                <td>CV Kreatif Nusantara</td>
+                <td><span class="pill">Animasi</span></td>
+                <td>Manual</td>
+                <td><span class="pill">Aktif</span></td>
+                <td>25 Mei 2026</td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Network Engineer</td>
+                <td>PT Indosat Ooredoo</td>
+                <td><span class="pill">TJKT</span></td>
+                <td>Manual</td>
+                <td><span class="pill">Aktif</span></td>
+                <td>20 Mei 2026</td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Graphic Designer</td>
+                <td>Agency XYZ</td>
+                <td><span class="pill">DKV</span></td>
+                <td>Manual</td>
+                <td><span class="pill">Draft</span></td>
+                <td>10 Jun 2026</td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Backend Developer</td>
+                <td>PT Digital Nusantara</td>
+                <td><span class="pill">PPLG</span></td>
+                <td><span class="annotation">Crawl</span></td>
+                <td><span class="pill">Aktif</span></td>
+                <td>15 Jun 2026</td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Illustrator Freelance</td>
+                <td>Studio Kreatif Bandung</td>
+                <td><span class="pill">DKV</span></td>
+                <td>Manual</td>
+                <td><span class="pill" style="color:#666;border-color:#999">Nonaktif</span></td>
+                <td><span style="color:#a32d2d">01 Mei 2026</span></td>
+                <td style="display:flex;gap:4px;padding:8px">
+                    <a href="lowongan-detail.html" class="btn btn-sm">Detail</a>
+                  <div class="btn btn-sm btn-danger" onclick="openModal('modal-hapus')">Hapus</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: HAPUS -->
+  <div class="modal-overlay" id="modal-hapus">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <div class="modal-title">Konfirmasi Hapus</div>
+        <div class="modal-close" onclick="closeModal('modal-hapus')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:13px;margin-bottom:8px">Hapus lowongan ini?</div>
+        <div style="font-size:12px;color:#a32d2d">Tindakan ini tidak dapat dibatalkan.</div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn" onclick="closeModal('modal-hapus')">Batal</div>
+        <div class="btn btn-danger" onclick="closeModal('modal-hapus')">Hapus</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderAdminSidebar('lowongan');
+    renderAdminTopbar('Lowongan Kerja', true);
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+      o.addEventListener('click', function (e) { if (e.target === this) closeModal(this.id); });
+    });
+  </script>
+</body>
+
+</html>

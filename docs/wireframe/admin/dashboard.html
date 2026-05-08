@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Telkom Career Hub Admin</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+  <div class="shell">
+    <div id="sidebar-placeholder"></div>
+    <div class="main">
+      <div id="topbar-placeholder"></div>
+      <div class="content">
+        <div class="grid-4" style="margin-bottom:16px">
+          <div class="stat-card">
+            <div class="stat-label">Total Lowongan Aktif</div>
+            <div class="stat-value">42</div>
+            <div class="stat-sub">dari 4 jurusan</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">User Terdaftar</div>
+            <div class="stat-value" style="color:#185fa5">218</div>
+            <div class="stat-sub">termasuk alumni</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Crawl Menunggu</div>
+            <div class="stat-value" style="color:#854f0b">5</div>
+            <div class="stat-sub">perlu validasi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Mitra Industri</div>
+            <div class="stat-value">17</div>
+            <div class="stat-sub">perusahaan mitra</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Lowongan Terbaru</div><a href="lowongan.html" class="btn btn-sm">Lihat Semua</a>
+            </div>
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Posisi</th>
+                  <th>Perusahaan</th>
+                  <th>Jurusan</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Frontend Developer</td>
+                  <td>PT Telkom</td>
+                  <td><span class="pill">PPLG</span></td>
+                  <td><span class="pill">Aktif</span></td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-detail')">Detail</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Motion Designer</td>
+                  <td>CV Kreatif</td>
+                  <td><span class="pill">Animasi</span></td>
+                  <td><span class="pill">Aktif</span></td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-detail')">Detail</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Network Engineer</td>
+                  <td>PT Indosat</td>
+                  <td><span class="pill">TJKT</span></td>
+                  <td><span class="pill">Aktif</span></td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-detail')">Detail</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Graphic Designer</td>
+                  <td>Agency XYZ</td>
+                  <td><span class="pill">DKV</span></td>
+                  <td><span class="pill">Draft</span></td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-detail')">Detail</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Crawl Menunggu Validasi</div><a href="crawl.html" class="btn btn-sm">Lihat
+                Semua</a>
+            </div>
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Posisi</th>
+                  <th>Sumber</th>
+                  <th>Tanggal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UI/UX Designer</td>
+                  <td>LinkedIn</td>
+                  <td>04 Mei 2026</td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-crawl')">Tinjau</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Backend Dev</td>
+                  <td>Glints</td>
+                  <td>04 Mei 2026</td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-crawl')">Tinjau</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Animator 3D</td>
+                  <td>Kalibrr</td>
+                  <td>03 Mei 2026</td>
+                  <td>
+                    <div class="btn btn-sm" onclick="openModal('modal-crawl')">Tinjau</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Aktivitas Terakhir</div><span class="annotation">Log Admin</span>
+          </div>
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Aksi</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="white-space:nowrap;color:var(--muted)">05 Mei 2026, 09:14</td>
+                <td><span class="pill">Tambah</span></td>
+                <td>Lowongan <b>IT Support Intern</b> &mdash; PT Digital Nusantara ditambahkan</td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;color:var(--muted)">04 Mei 2026, 16:30</td>
+                <td><span class="pill">Setujui</span></td>
+                <td>Crawl <b>Backend Developer</b> dari Glints disetujui &amp; ditayangkan</td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;color:var(--muted)">04 Mei 2026, 11:05</td>
+                <td><span class="pill">Tolak</span></td>
+                <td>Crawl <b>Sales Executive</b> dari Kalibrr ditolak (tidak relevan jurusan)</td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;color:var(--muted)">03 Mei 2026, 14:22</td>
+                <td><span class="pill">Edit</span></td>
+                <td>Lowongan <b>Motion Designer</b> diperbarui &mdash; expired diperpanjang</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DETAIL -->
+  <div class="modal-overlay" id="modal-detail">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div class="modal-title">Detail Lowongan</div>
+        <div class="modal-close" onclick="closeModal('modal-detail')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:15px;font-weight:700;margin-bottom:4px">Frontend Developer</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">PT Telkom Indonesia</div>
+        <div class="detail-row"><span class="detail-key">Jurusan</span><span class="detail-val">PPLG</span></div>
+        <div class="detail-row"><span class="detail-key">Status</span><span class="detail-val"><span
+              class="pill">Aktif</span></span></div>
+        <div class="detail-row"><span class="detail-key">Expired</span><span class="detail-val">30 Mei 2026</span></div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn" onclick="closeModal('modal-detail')">Tutup</div><a href="lowongan.html"
+          class="btn btn-primary">Kelola</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TINJAU CRAWL -->
+  <div class="modal-overlay" id="modal-crawl">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div class="modal-title">Tinjau Lowongan Crawl</div>
+        <div class="modal-close" onclick="closeModal('modal-crawl')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="annotation" style="margin-bottom:12px">Sumber: LinkedIn · Dicrawl: 04 Mei 2026</div>
+        <div class="detail-row"><span class="detail-key">Posisi</span><span class="detail-val">UI/UX Designer</span>
+        </div>
+        <div class="detail-row"><span class="detail-key">Perusahaan</span><span class="detail-val">Startup ABC</span>
+        </div>
+        <div class="detail-row"><span class="detail-key">Jurusan Relevan</span><span class="detail-val">DKV</span></div>
+        <div style="margin-top:12px;font-size:11px;color:var(--muted)">Apakah lowongan ini relevan dan aman untuk
+          ditampilkan ke user?</div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn btn-danger" onclick="closeModal('modal-crawl')">Tolak</div>
+        <div class="btn btn-primary" onclick="closeModal('modal-crawl')">Setujui &amp; Tampilkan</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderAdminSidebar('dashboard');
+    renderAdminTopbar('Dashboard', true);
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+      o.addEventListener('click', function (e) { if (e.target === this) closeModal(this.id); });
+    });
+  </script>
+</body>
+
+</html>

@@ -12,12 +12,12 @@ class PPDBController extends Controller
     public function index()
     {
         $ppdbs = PPDB::latest()->paginate(10);
-        return view('admin.ppdb', compact('ppdbs'));
+        return view('admin.ppdb.index', compact('ppdbs'));
     }
 
     public function create()
     {
-        return view('admin.ppdb-tambah');
+        return view('admin.ppdb.create');
     }
 
     public function store(Request $request)
@@ -39,13 +39,13 @@ class PPDBController extends Controller
     public function show($id)
     {
         $ppdb = PPDB::findOrFail($id);
-        return view('admin.ppdb-detail', compact('ppdb'));
+        return view('admin.ppdb.show', compact('ppdb'));
     }
 
     public function edit($id)
     {
         $ppdb = PPDB::findOrFail($id);
-        return view('admin.ppdb-edit', compact('ppdb'));
+        return view('admin.ppdb.edit', compact('ppdb'));
     }
 
     public function update(Request $request, $id)

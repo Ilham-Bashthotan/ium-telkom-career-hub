@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beranda — Telkom Career Hub</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <!-- APP -->
+  <div id="user-app" style="display:flex;flex-direction:column;min-height:100vh;width:100%">
+    <div id="navbar-placeholder"></div>
+
+    <div class="public-content">
+      <div class="page-container">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px">Informasi PPDB</div>
+        <div class="ppdb-carousel">
+          <div class="ppdb-slides" id="ppdb-slides">
+            <div class="ppdb-slide">
+              <div class="card">
+                <div class="card-title" style="margin-bottom:6px">PPDB SMK Telkom Bandung 2026/2027</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Periode: 1 April – 30 Juni 2026</div>
+                <div style="font-size:12px">Pendaftaran siswa baru SMK Telkom Bandung tahun ajaran 2026/2027 telah
+                  dibuka. Tersedia jurusan DKV, Animasi, TJKT, dan PPLG.</div>
+              </div>
+            </div>
+            <div class="ppdb-slide">
+              <div class="card">
+                <div class="card-title" style="margin-bottom:6px">Open House SMK Telkom 2026</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:8px">10 Mei 2026</div>
+                <div style="font-size:12px">Kunjungi Open House SMK Telkom Bandung. Temui langsung guru, siswa, dan
+                  lihat fasilitas unggulan kami.</div>
+              </div>
+            </div>
+          </div>
+          <div class="ppdb-nav">
+            <button class="ppdb-btn" onclick="movePpdb(-1)">&#8592;</button>
+            <button class="ppdb-btn" onclick="movePpdb(1)">&#8594;</button>
+          </div>
+        </div>
+
+        <div style="font-size:14px;font-weight:700;margin:20px 0 6px">Info Lowongan Kerja</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Beberapa lowongan terbaru. <b>Daftar akun</b>
+          untuk melihat detail lengkap.</div>
+        <div class="job-card">
+          <div class="job-card-header">
+            <div>
+              <div class="job-title">Frontend Developer</div>
+              <div class="job-company">PT Telkom Indonesia</div>
+            </div><span class="pill">PPLG</span>
+          </div>
+          <div class="job-meta"><span class="job-tag">Full Time</span><span class="job-tag">Bandung</span></div>
+        </div>
+        <div class="job-card">
+          <div class="job-card-header">
+            <div>
+              <div class="job-title">Motion Designer</div>
+              <div class="job-company">CV Kreatif Nusantara</div>
+            </div><span class="pill">Animasi</span>
+          </div>
+          <div class="job-meta"><span class="job-tag">Part Time</span><span class="job-tag">Remote</span></div>
+        </div>
+        <div class="job-card">
+          <div class="job-card-header">
+            <div>
+              <div class="job-title">Network Engineer</div>
+              <div class="job-company">PT Indosat Ooredoo</div>
+            </div><span class="pill">TJKT</span>
+          </div>
+          <div class="job-meta"><span class="job-tag">Full Time</span><span class="job-tag">Jakarta</span></div>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <div class="btn btn-primary" onclick="if(guardNav(event)) window.location.href='lowongan.html'">Lihat Semua
+            Lowongan →
+          </div>
+        </div>
+
+        <div style="font-size:14px;font-weight:700;margin:32px 0 12px">Mitra Industri</div>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; background:var(--surface); padding:16px; border:1px solid var(--line);">
+          <div class="logo-icon" onclick="window.location.href='mitra.html'" style="width:60px; height:60px; border-radius:8px; cursor:pointer; font-size:14px;">TLK</div>
+          <div class="logo-icon" onclick="window.location.href='mitra.html'" style="width:60px; height:60px; border-radius:8px; cursor:pointer; font-size:14px;">ISAT</div>
+          <div class="logo-icon" onclick="window.location.href='mitra.html'" style="width:60px; height:60px; border-radius:8px; cursor:pointer; font-size:14px;">MTP</div>
+          <div class="logo-icon" onclick="window.location.href='mitra.html'" style="width:60px; height:60px; border-radius:8px; cursor:pointer; font-size:14px;">KRT</div>
+          <div class="logo-icon" onclick="window.location.href='mitra.html'" style="width:60px; height:60px; border-radius:8px; cursor:pointer; font-size:14px;">XYZ</div>
+          <div style="font-size:11px; color:var(--muted); margin-left:auto;">
+            <a href="mitra.html" style="color:inherit; text-decoration:none;">Lihat Semua Mitra →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <div class="wa-widget">
+      <div class="wa-tooltip">Mau tanya? Chat kami</div>
+      <a href="#" class="wa-button">w</a>
+    </div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderUserNav('home');
+    renderUserFooter();
+
+    // PPDB Carousel
+    let ppdbIndex = 0;
+    function movePpdb(dir) {
+      const slides = document.querySelectorAll('.ppdb-slide');
+      ppdbIndex = (ppdbIndex + dir + slides.length) % slides.length;
+      document.getElementById('ppdb-slides').style.transform = 'translateX(-' + (ppdbIndex * 100) + '%)';
+    }
+  </script>
+</body>
+
+</html>

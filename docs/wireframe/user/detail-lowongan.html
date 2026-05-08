@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Lowongan — Telkom Career Hub</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .detail-container {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+        align-items: start;
+    }
+    .detail-header {
+        padding: 2.5rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        margin-bottom: 2rem;
+    }
+    .detail-body {
+        padding: 2.5rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+    }
+    .detail-section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--primary-light);
+        color: var(--text);
+    }
+    @media (max-width: 900px) {
+        .detail-container {
+            grid-template-columns: 1fr;
+        }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="user-app" style="display:flex;flex-direction:column;min-height:100vh;width:100%">
+    <div id="navbar-placeholder"></div>
+
+    <div class="public-content">
+      <div class="page-container">
+        <div style="margin-bottom: 1.5rem;">
+          <a href="lowongan.html" class="btn" style="color: var(--muted); border: none;"><i data-lucide="arrow-left" style="width: 18px; height: 18px"></i> Kembali ke Lowongan</a>
+        </div>
+
+        <div class="detail-container">
+          <div>
+            <div class="detail-header">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                  <div style="width: 64px; height: 64px; background: #f1f5f9; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; color: var(--primary)">TLK</div>
+                  <div>
+                    <h1 style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.2;">Frontend Developer</h1>
+                    <p style="color: var(--primary); font-weight: 600;">PT Telkom Indonesia</p>
+                  </div>
+                </div>
+                <span class="pill" style="padding: 0.5rem 1rem; font-size: 0.875rem;">PPLG</span>
+              </div>
+              <div class="job-meta">
+                <span class="job-tag"><i data-lucide="clock" style="width:14px;height:14px;margin-right:4px"></i> Full Time</span>
+                <span class="job-tag"><i data-lucide="map-pin" style="width:14px;height:14px;margin-right:4px"></i> Bandung</span>
+                <span class="job-tag"><i data-lucide="banknote" style="width:14px;height:14px;margin-right:4px"></i> Rp 4.5jt - 8jt</span>
+              </div>
+            </div>
+
+            <div class="detail-body">
+              <div class="detail-section" style="margin-bottom: 2.5rem;">
+                <h2 class="detail-section-title">Deskripsi Pekerjaan</h2>
+                <p style="color: var(--secondary); line-height: 1.8;">
+                  Kami sedang mencari Frontend Developer junior yang antusias untuk bergabung dengan tim digital kami di PT Telkom Indonesia. Anda akan bekerja bersama tim desainer dan backend engineer untuk membangun produk digital masa depan yang berdampak bagi jutaan rakyat Indonesia.
+                </p>
+              </div>
+
+              <div class="detail-section" style="margin-bottom: 2.5rem;">
+                <h2 class="detail-section-title">Kualifikasi Utama</h2>
+                <ul style="color: var(--secondary); line-height: 2; padding-left: 1.25rem;">
+                  <li>Lulusan SMK Telkom (Jurusan PPLG diutamakan).</li>
+                  <li>Pemahaman mendalam tentang HTML5, CSS3, dan ES6+ JavaScript.</li>
+                  <li>Berpengalaman menggunakan framework CSS seperti Tailwind atau Bootstrap.</li>
+                  <li>Memahami konsep dasar React.js atau Vue.js.</li>
+                  <li>Mampu bekerja dalam tim menggunakan Git.</li>
+                  <li>Memiliki portofolio proyek web yang relevan.</li>
+                </ul>
+              </div>
+
+              <div class="detail-section">
+                <h2 class="detail-section-title">Informasi Tambahan</h2>
+                <div class="detail-row">
+                    <span class="detail-key">Deadline</span>
+                    <span class="detail-val">30 Mei 2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Benefit</span>
+                    <span class="detail-val">Asuransi Kesehatan, Uang Makan, Bonus Kinerja</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside>
+            <div class="card" style="position: sticky; top: 100px;">
+                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem;">Tertarik dengan posisi ini?</h3>
+                <p style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem;">Pastikan profil Anda sudah lengkap sebelum melamar untuk memperbesar peluang diterima.</p>
+                <button class="btn btn-primary btn-block" style="padding: 0.875rem; margin-bottom: 0.75rem;">Lamar Sekarang <i data-lucide="external-link" style="width:16px;height:16px"></i></button>
+                <button class="btn btn-block"><i data-lucide="bookmark" style="width:16px;height:16px"></i> Simpan Lowongan</button>
+                
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line);">
+                    <p style="font-size: 0.75rem; color: var(--muted); text-align: center;">Dibagikan oleh tim rekrutmen resmi Telkom.</p>
+                </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderUserNav('lowongan');
+    renderUserFooter();
+    if (!isLoggedIn()) { window.location.href = 'index.html'; }
+  </script>
+</body>
+
+</html>

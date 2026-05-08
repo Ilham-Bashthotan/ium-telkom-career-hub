@@ -14,6 +14,11 @@ class AuthController extends Controller
         return view('user.login');
     }
 
+    public function showAdminLogin()
+    {
+        return view('admin.login');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -26,14 +31,26 @@ class AuthController extends Controller
             return redirect()->intended('/user/home');
         }
 
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->withInput($request->only('email'));
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/admin/dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
+            'email' => 'Kredensial admin tidak valid.',
+        ])->withInput($request->only('email'));
     }
 
     public function showRegister()

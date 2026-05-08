@@ -4,29 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard') — Telkom Career Hub</title>
-    <link rel="stylesheet" href="{{ asset('docs/wireframe/styles.css') }}">
-    <!-- We should probably move the CSS to a proper place later, but for now we use the one from wireframe as requested to "continue" from it -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Premium Admin-specific adjustments */
+        /* Dashboard Specific Layout */
         :root {
             --sidebar-width: 280px;
-            --sidebar-bg: #1e293b;
-            --sidebar-text: #94a3b8;
-            --sidebar-active: #ffffff;
-            --sidebar-active-bg: rgba(255, 255, 255, 0.1);
         }
 
         .admin-shell {
             display: flex;
             min-height: 100vh;
-            background: #f1f5f9;
+            background: var(--bg);
         }
 
         .admin-sidebar {
             width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            color: var(--sidebar-text);
+            background: #111827; /* Deep professional dark */
+            color: #94a3b8;
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -38,7 +33,7 @@
         }
 
         .sidebar-header {
-            padding: 2rem;
+            padding: 1.5rem 2rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -61,22 +56,27 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.75rem 1rem;
-            border-radius: 8px;
-            color: var(--sidebar-text);
+            border-radius: var(--radius-sm);
+            color: #94a3b8;
             font-weight: 500;
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             transition: all 0.2s ease;
         }
 
         .sidebar-link:hover {
             color: #fff;
-            background: var(--sidebar-active-bg);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .sidebar-link.active {
             color: #fff;
             background: var(--primary);
-            box-shadow: 0 4px 12px rgba(238, 45, 36, 0.3);
+            box-shadow: 0 4px 12px rgba(238, 45, 36, 0.2);
+        }
+
+        .sidebar-link i, .sidebar-link svg {
+            width: 18px;
+            height: 18px;
         }
 
         .sidebar-footer {
@@ -94,7 +94,8 @@
 
         .admin-topbar {
             height: 72px;
-            background: #fff;
+            background: var(--surface-glass);
+            backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--line);
             display: flex;
             align-items: center;
@@ -108,14 +109,21 @@
         .admin-content {
             padding: 2rem;
             flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .breadcrumb {
             display: flex;
+            align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--muted);
             margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .page-header {
@@ -128,7 +136,8 @@
         .page-title {
             font-size: 1.75rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.025em;
+            color: var(--text);
         }
 
         /* Stat Grid Improvements */
@@ -139,42 +148,81 @@
             margin-bottom: 2.5rem;
         }
 
-        .stat-card-premium {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 16px;
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
             padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        .stat-card-premium:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+        .stat-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            flex-shrink: 0;
         }
 
-        .stat-info .label {
+        .stat-icon i, .stat-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .stat-label {
             font-size: 0.875rem;
             font-weight: 600;
             color: var(--muted);
             margin-bottom: 0.25rem;
         }
 
-        .stat-info .value {
-            font-size: 2rem;
+        .stat-value {
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--text);
+            line-height: 1;
+        }
+
+        /* Table Improvements */
+        .table-container {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: var(--bg);
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .admin-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--line);
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table tr:hover td {
+            background: rgba(248, 250, 252, 0.5);
         }
 
         /* Custom Scrollbar */
@@ -191,6 +239,26 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
+        @media (max-width: 1024px) {
+            :root {
+                --sidebar-width: 80px;
+            }
+            .sidebar-header span, .sidebar-link span, .sidebar-footer span, .sidebar-header div:last-child {
+                display: none;
+            }
+            .sidebar-header {
+                justify-content: center;
+                padding: 1.5rem 0;
+            }
+            .sidebar-link {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+            .sidebar-nav {
+                padding: 1.5rem 0.5rem;
+            }
+        }
     </style>
     @yield('styles')
 </head>
@@ -199,36 +267,34 @@
         <!-- Sidebar -->
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                    <i data-lucide="shield" style="width: 20px; height: 20px; color: #fff;"></i>
-                </div>
-                <span>TCH Admin</span>
+                <div style="background:var(--primary);color:white;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">T</div>
+                <span>Admin Hub</span>
             </div>
             
             <nav class="sidebar-nav">
                 <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i data-lucide="layout-dashboard"></i> Dashboard
+                    <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
                 </a>
                 <a href="{{ route('admin.lowongan.index') }}" class="sidebar-link {{ request()->routeIs('admin.lowongan.*') ? 'active' : '' }}">
-                    <i data-lucide="briefcase"></i> Lowongan Kerja
+                    <i data-lucide="briefcase"></i> <span>Lowongan Kerja</span>
                 </a>
                 <a href="{{ route('admin.mitra.index') }}" class="sidebar-link {{ request()->routeIs('admin.mitra.*') ? 'active' : '' }}">
-                    <i data-lucide="building-2"></i> Mitra Industri
+                    <i data-lucide="building-2"></i> <span>Mitra Industri</span>
                 </a>
                 <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i data-lucide="users"></i> Management User
+                    <i data-lucide="users"></i> <span>Management User</span>
                 </a>
                 <a href="{{ route('admin.ppdb.index') }}" class="sidebar-link {{ request()->routeIs('admin.ppdb.*') ? 'active' : '' }}">
-                    <i data-lucide="graduation-cap"></i> Info PPDB
+                    <i data-lucide="graduation-cap"></i> <span>Info PPDB</span>
                 </a>
                 <a href="{{ route('admin.crawl.index') }}" class="sidebar-link {{ request()->routeIs('admin.crawl.*') ? 'active' : '' }}">
-                    <i data-lucide="search"></i> Web Crawler
+                    <i data-lucide="search"></i> <span>Web Crawler</span>
                 </a>
                 
-                <div style="margin-top: 2rem; padding: 0 1rem; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.05em;">Sistem</div>
+                <div style="margin-top: 2rem; padding: 0 1rem; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.1em;">Sistem</div>
                 
                 <a href="#" class="sidebar-link">
-                    <i data-lucide="settings"></i> Pengaturan
+                    <i data-lucide="settings"></i> <span>Pengaturan</span>
                 </a>
             </nav>
 
@@ -236,7 +302,7 @@
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="sidebar-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
-                        <i data-lucide="log-out"></i> Logout
+                        <i data-lucide="log-out"></i> <span>Keluar</span>
                     </button>
                 </form>
             </div>
@@ -247,24 +313,21 @@
             <!-- Topbar -->
             <header class="admin-topbar">
                 <div class="topbar-left">
-                    <button id="sidebar-toggle" style="background: none; border: none; cursor: pointer; color: var(--muted); display: none;">
-                        <i data-lucide="menu"></i>
-                    </button>
-                    <div style="font-weight: 600; color: var(--muted)">Selamat datang, Admin</div>
+                    <div style="font-weight: 600; color: var(--muted); font-size: 0.875rem">Panel Administrasi</div>
                 </div>
                 
                 <div class="topbar-right" style="display: flex; align-items: center; gap: 1.5rem;">
-                    <div style="position: relative;">
-                        <i data-lucide="bell" style="width: 20px; height: 20px; color: var(--muted); cursor: pointer;"></i>
+                    <div style="position: relative; cursor: pointer;">
+                        <i data-lucide="bell" style="width: 20px; height: 20px; color: var(--muted);"></i>
                         <span style="position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; border: 2px solid #fff;"></span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; padding-left: 1.5rem; border-left: 1px solid var(--line);">
                         <div style="text-align: right;">
-                            <div style="font-size: 0.875rem; font-weight: 700;">Ilham Bashthotan</div>
-                            <div style="font-size: 0.75rem; color: var(--muted)">Super Admin</div>
+                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--text)">{{ Auth::user()->name ?? 'Admin' }}</div>
+                            <div style="font-size: 0.75rem; color: var(--muted)">Administrator</div>
                         </div>
-                        <div style="width: 40px; height: 40px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--secondary)">
-                            IB
+                        <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--primary)">
+                            {{ substr(Auth::user()->name ?? 'AD', 0, 2) }}
                         </div>
                     </div>
                 </div>

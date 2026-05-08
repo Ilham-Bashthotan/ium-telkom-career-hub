@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semua Lowongan — Telkom Career Hub</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .sidebar-link {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line);
+        background: var(--surface);
+        text-align: left;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sidebar-link:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+    .sidebar-link.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+    .form-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+    }
+    .form-input, .form-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line);
+        background: var(--bg);
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+    }
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: white;
+        box-shadow: 0 0 0 4px var(--primary-light);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="user-app" style="display:flex;flex-direction:column;min-height:100vh;width:100%">
+    <div id="navbar-placeholder"></div>
+
+    <div class="public-content">
+      <div class="page-container">
+        <div style="margin-bottom: 2.5rem;">
+            <h1 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.025em;">Cari Lowongan Kerja</h1>
+            <p style="color: var(--muted)">Temukan peluang terbaik yang sesuai dengan minat dan keahlianmu.</p>
+        </div>
+
+        <div class="loker-grid">
+          <aside class="sidebar-box">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <i data-lucide="filter" style="width: 20px; height: 20px; color: var(--primary)"></i>
+                <h2 style="font-size: 1.125rem; font-weight: 700;">Filter</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+              <label class="form-label">Kata Kunci</label>
+              <div style="position: relative;">
+                <i data-lucide="search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted)"></i>
+                <input class="form-input" style="padding-left: 2.75rem;" placeholder="Cari posisi...">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+              <label class="form-label">Jurusan</label>
+              <div class="sidebar-list">
+                <button class="sidebar-link active" type="button">Semua Jurusan <span style="opacity: 0.6">42</span></button>
+                <button class="sidebar-link" type="button">PPLG <span style="opacity: 0.6">12</span></button>
+                <button class="sidebar-link" type="button">TJKT <span style="opacity: 0.6">8</span></button>
+                <button class="sidebar-link" type="button">DKV <span style="opacity: 0.6">15</span></button>
+                <button class="sidebar-link" type="button">Animasi <span style="opacity: 0.6">7</span></button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+              <label class="form-label">Lokasi</label>
+              <select class="form-select">
+                <option>Semua Lokasi</option>
+                <option>Bandung</option>
+                <option>Jakarta</option>
+                <option>Remote (WFH)</option>
+                <option>Surabaya</option>
+              </select>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+              <label class="form-label">Tipe Pekerjaan</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <button class="sidebar-link" style="padding: 0.5rem; justify-content: center; margin-bottom: 0;">Full Time</button>
+                <button class="sidebar-link" style="padding: 0.5rem; justify-content: center; margin-bottom: 0;">Intern</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" style="padding: 0.75rem;">Terapkan Filter</button>
+            <button class="btn btn-block" style="margin-top: 0.75rem; border: none; color: var(--muted); font-size: 0.75rem;">Reset Filter</button>
+          </aside>
+
+          <main>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.875rem; color: var(--muted)">Menampilkan <b>5</b> dari total 42 lowongan</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 0.875rem; color: var(--muted)">Urutkan:</span>
+                    <select class="form-select" style="padding: 0.4rem 2rem 0.4rem 0.75rem; width: auto; background-color: transparent;">
+                        <option>Terbaru</option>
+                        <option>Gaji Tertinggi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="job-card" onclick="return guardNav(event, 'detail-lowongan.html', this)">
+              <div class="job-card-header">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                  <div style="width: 48px; height: 48px; background: #f1f5f9; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary)">TLK</div>
+                  <div>
+                    <div class="job-title">Frontend Developer</div>
+                    <div class="job-company">PT Telkom Indonesia</div>
+                  </div>
+                </div>
+                <span class="pill">PPLG</span>
+              </div>
+              <div class="job-meta">
+                <span class="job-tag"><i data-lucide="clock" style="width:12px;height:12px;margin-right:4px"></i> Full Time</span>
+                <span class="job-tag"><i data-lucide="map-pin" style="width:12px;height:12px;margin-right:4px"></i> Bandung</span>
+                <span class="job-tag"><i data-lucide="banknote" style="width:12px;height:12px;margin-right:4px"></i> Rp 3jt - 8jt</span>
+              </div>
+              <p style="font-size: 0.875rem; color: var(--muted); margin: 1rem 0;">Kualifikasi utama: HTML5, CSS3, ES6 JavaScript, dan dasar React. Portofolio proyek web diutamakan.</p>
+              <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--muted)">
+                <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="calendar" style="width:14px;height:14px"></i> Deadline: 30 Mei 2026</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="users" style="width:14px;height:14px"></i> 12 Pelamar</span>
+              </div>
+            </div>
+
+            <div class="job-card" onclick="return guardNav(event, 'detail-lowongan.html', this)">
+              <div class="job-card-header">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                  <div style="width: 48px; height: 48px; background: #f1f5f9; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0ea5e9">ISAT</div>
+                  <div>
+                    <div class="job-title">Network Engineer</div>
+                    <div class="job-company">PT Indosat Ooredoo</div>
+                  </div>
+                </div>
+                <span class="pill" style="background: #e0f2fe; color: #0369a1">TJKT</span>
+              </div>
+              <div class="job-meta">
+                <span class="job-tag"><i data-lucide="clock" style="width:12px;height:12px;margin-right:4px"></i> Full Time</span>
+                <span class="job-tag"><i data-lucide="map-pin" style="width:12px;height:12px;margin-right:4px"></i> Jakarta</span>
+                <span class="job-tag"><i data-lucide="banknote" style="width:12px;height:12px;margin-right:4px"></i> Rp 4.5jt - 9jt</span>
+              </div>
+              <p style="font-size: 0.875rem; color: var(--muted); margin: 1rem 0;">Mampu mengelola infrastruktur jaringan, routing, switching, dan firewall. Sertifikasi CCNA menjadi nilai tambah.</p>
+              <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--muted)">
+                <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="calendar" style="width:14px;height:14px"></i> Deadline: 20 Mei 2026</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="users" style="width:14px;height:14px"></i> 8 Pelamar</span>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div style="display:flex; justify-content:center; align-items:center; gap:0.5rem; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--line);">
+              <button class="btn" disabled style="opacity:0.5; cursor:not-allowed;"><i data-lucide="chevron-left" style="width:16px;height:16px"></i></button>
+              <button class="btn btn-primary" style="min-width: 40px; padding: 0.5rem;">1</button>
+              <button class="btn" style="min-width: 40px; padding: 0.5rem;">2</button>
+              <button class="btn" style="min-width: 40px; padding: 0.5rem;">3</button>
+              <span style="color:var(--muted); font-size:1rem; padding:0 0.5rem;">...</span>
+              <button class="btn" style="min-width: 40px; padding: 0.5rem;">9</button>
+              <button class="btn"><i data-lucide="chevron-right" style="width:16px;height:16px"></i></button>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderUserNav('lowongan');
+    renderUserFooter();
+    
+    document.querySelectorAll('.sidebar-link').forEach(btn => {
+      btn.addEventListener('click', function () {
+        if (this.classList.contains('active')) return;
+        this.closest('.sidebar-list').querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+
+</html>

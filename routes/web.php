@@ -41,6 +41,10 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/mitra/{id}', [UserPerusahaanController::class, 'show'])->name('mitra.show');
 });
 
+// Admin Auth Routes
+Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login.post');
+
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
     Route::get('/', function () {

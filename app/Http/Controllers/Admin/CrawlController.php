@@ -16,7 +16,7 @@ class CrawlController extends Controller
                                     ->latest('tanggal_posting')
                                     ->paginate(15);
                                     
-        return view('admin.crawl', compact('crawledLowongans'));
+        return view('admin.crawl.index', compact('crawledLowongans'));
     }
     
     public function process(Request $request)

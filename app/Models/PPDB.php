@@ -18,6 +18,11 @@ class PPDB extends Model
         'admin_id',
     ];
 
+    protected $casts = [
+        'tanggal_mulai' => 'datetime',
+        'tanggal_selesai' => 'datetime',
+    ];
+
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');

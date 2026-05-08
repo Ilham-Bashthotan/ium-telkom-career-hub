@@ -57,6 +57,10 @@
         <div style="text-align: center; margin-top: 2rem; font-size: 0.875rem; color: var(--muted);">
             Belum punya akun? <a href="{{ route('register') }}" style="color: var(--primary); font-weight: 700;">Daftar Akun Baru</a>
         </div>
+
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="{{ route('admin.login') }}" style="font-size: 0.75rem; color: var(--muted); font-weight: 500;">Masuk sebagai Admin</a>
+        </div>
         
         <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line);">
             <a href="{{ route('home') }}" style="font-size: 0.875rem; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 0.5rem;"><i data-lucide="arrow-left" style="width: 16px; height: 16px"></i> Kembali ke Beranda</a>

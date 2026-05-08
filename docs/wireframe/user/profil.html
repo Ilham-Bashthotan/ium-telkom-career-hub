@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Saya — Telkom Career Hub</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .profile-header {
+        background: linear-gradient(to right, var(--primary), #a31c17);
+        height: 160px;
+        border-radius: var(--radius-lg);
+        margin-bottom: 4rem;
+        position: relative;
+    }
+    .profile-avatar-container {
+        position: absolute;
+        bottom: -40px;
+        left: 3rem;
+        display: flex;
+        align-items: flex-end;
+        gap: 1.5rem;
+    }
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        background: white;
+        border-radius: 24px;
+        border: 4px solid white;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+    }
+    .profile-info-basic h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 0.25rem;
+    }
+    .profile-info-basic p {
+        color: var(--muted);
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .detail-row {
+        display: flex;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-key { width: 180px; font-weight: 600; color: var(--muted); font-size: 0.875rem; }
+    .detail-val { font-weight: 500; color: var(--text); }
+  </style>
+</head>
+
+<body>
+  <div id="user-app" style="display:flex;flex-direction:column;min-height:100vh;width:100%">
+    <div id="navbar-placeholder"></div>
+
+    <div class="public-content">
+      <div class="page-container">
+        
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <div class="profile-avatar">RA</div>
+                <div class="profile-info-basic">
+                    <h1>Reza Aditya</h1>
+                    <p><i data-lucide="mail" style="width: 14px; height: 14px"></i> reza.aditya@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start;">
+            <div>
+                <div class="card" style="padding: 2.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2 style="font-size: 1.25rem; font-weight: 700;">Informasi Pribadi</h2>
+                        <button class="btn" onclick="openModal('modal-edit-profil')"><i data-lucide="edit-3" style="width: 16px; height: 16px"></i> Edit Profil</button>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-key">Nama Lengkap</span>
+                        <span class="detail-val">Reza Aditya Putra</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Email</span>
+                        <span class="detail-val">reza.aditya@gmail.com</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">No. HP</span>
+                        <span class="detail-val">0812 3456 7890</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Status Alumni</span>
+                        <span class="detail-val"><span class="pill">Alumni SMK Telkom</span></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Pengalaman Kerja</span>
+                        <span class="detail-val">Frontend Developer at PT Telkom (Intern)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Keahlian</span>
+                        <span class="detail-val" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <span class="job-tag">HTML</span>
+                            <span class="job-tag">CSS</span>
+                            <span class="job-tag">JavaScript</span>
+                            <span class="job-tag">React</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <aside>
+                <div class="card" style="text-align: center;">
+                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Kelengkapan Profil</h3>
+                    <div style="width: 80px; height: 80px; border-radius: 50%; border: 6px solid var(--primary-light); border-top-color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: 800; font-size: 1.25rem;">
+                        75%
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem;">Sedikit lagi! Lengkapi portofoliomu untuk menarik perhatian mitra industri.</p>
+                    <button class="btn btn-primary btn-block">Lengkapi Sekarang</button>
+                </div>
+            </aside>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- MODAL: EDIT PROFIL -->
+  <div class="modal-overlay" id="modal-edit-profil">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">Perbarui Profil</div>
+        <div class="modal-close" onclick="closeModal('modal-edit-profil')" style="border:none;background:none;font-size:1.25rem;cursor:pointer">✕</div>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Nama Lengkap</label>
+            <input class="btn btn-block" style="text-align: left; background: var(--bg); font-weight: 400;" value="Reza Aditya Putra">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">No. HP</label>
+            <input class="btn btn-block" style="text-align: left; background: var(--bg); font-weight: 400;" value="0812 3456 7890">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" style="flex: 1" onclick="closeModal('modal-edit-profil')">Batal</button>
+        <button class="btn btn-primary" style="flex: 1" onclick="closeModal('modal-edit-profil')">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    renderUserNav('profil');
+    renderUserFooter();
+    if (!isLoggedIn()) { window.location.href = 'index.html'; }
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+  </script>
+</body>
+
+</html>
