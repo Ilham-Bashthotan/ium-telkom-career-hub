@@ -11,9 +11,48 @@ use Illuminate\Support\Facades\Auth;
 
 class LowonganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lowongans = Lowongan::with(['perusahaan', 'jurusan'])->latest('tanggal_posting')->paginate(10);
+        $query = Lowongan::with(['perusahaan', 'jurusan']);
+
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'like', '%' . $search . '%')
+                  ->orWhereHas('perusahaan', function($subQ) use ($search) {
+                      $subQ->where('nama_perusahaan', 'like', '%' . $search . '%');
+                  })
+                  ->orWhereHas('jurusan', function($subQ) use ($search) {
+                      $subQ->where('nama_jurusan', 'like', '%' . $search . '%');
+                  });
+            });
+        }
+
+        // Filter by status
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by tipe pekerjaan
+        if ($request->has('tipe_pekerjaan') && !empty($request->tipe_pekerjaan)) {
+            $query->where('tipe_pekerjaan', $request->tipe_pekerjaan);
+        }
+
+        // Filter by lokasi
+        if ($request->has('lokasi') && !empty($request->lokasi)) {
+            $query->where('lokasi', 'like', '%' . $request->lokasi . '%');
+        }
+
+        // Filter by perusahaan
+        if ($request->has('perusahaan') && !empty($request->perusahaan)) {
+            $query->whereHas('perusahaan', function($subQ) use ($request) {
+                $subQ->where('nama_perusahaan', 'like', '%' . $request->perusahaan . '%');
+            });
+        }
+
+        $lowongans = $query->latest('tanggal_posting')->paginate(10)->appends($request->query());
         return view('admin.lowongan.index', compact('lowongans'));
     }
 

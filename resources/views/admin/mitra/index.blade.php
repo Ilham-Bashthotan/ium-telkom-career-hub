@@ -20,11 +20,17 @@
 </div>
 
 <div class="card" style="padding: 0; overflow: hidden;">
-    <div style="padding: 1.5rem; border-bottom: 1px solid var(--line); display: flex; gap: 1rem; align-items: center; background: #fcfcfc;">
-        <div style="position: relative; flex: 1;">
+    <div style="padding: 1.5rem; border-bottom: 1px solid var(--line); display: flex; gap: 1rem; align-items: center; background: #fcfcfc; flex-wrap: wrap;">
+        <div style="position: relative; flex: 1; min-width: 250px;">
             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted);"></i>
-            <input type="text" placeholder="Cari nama perusahaan atau sektor industri..." style="width: 100%; padding: 0.625rem 1rem 0.625rem 2.5rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; outline: none;">
+            <input type="text" id="search-input" placeholder="Cari nama perusahaan atau sektor industri..." style="width: 100%; padding: 0.625rem 1rem 0.625rem 2.5rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; outline: none;" value="{{ request('search') }}">
         </div>
+        <button id="filter-btn" style="padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; background: #fff; cursor: pointer;">
+            <i data-lucide="filter" style="width: 16px; height: 16px; margin-right: 0.5rem;"></i> Filter
+        </button>
+        <button id="clear-filters" style="padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; background: #fff; cursor: pointer; min-width: auto;">
+            <i data-lucide="x" style="width: 16px; height: 16px"></i> Clear
+        </button>
     </div>
 
     <table style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -87,4 +93,145 @@
         </tbody>
     </table>
 </div>
+
+<!-- Filter Modal -->
+<div id="filter-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 12px; padding: 2rem; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text);">Filter Mitra Industri</h3>
+            <button id="close-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted);">&times;</button>
+        </div>
+
+        <form id="filter-form">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text);">Status Mitra</label>
+                <select name="is_mitra" style="width: 100%; padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; outline: none;">
+                    <option value="">Semua Status</option>
+                    <option value="1" {{ request('is_mitra') === '1' ? 'selected' : '' }}>Official Partner</option>
+                    <option value="0" {{ request('is_mitra') === '0' ? 'selected' : '' }}>Umum</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text);">Sektor Industri</label>
+                <input type="text" name="sektor_industri" placeholder="Masukkan sektor industri..." style="width: 100%; padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; outline: none;" value="{{ request('sektor_industri') }}">
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text);">Website</label>
+                <input type="text" name="website" placeholder="Masukkan domain website..." style="width: 100%; padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; outline: none;" value="{{ request('website') }}">
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button type="button" id="reset-filter" style="padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.875rem; background: #fff; cursor: pointer;">Reset</button>
+                <button type="submit" style="padding: 0.625rem 1rem; border: none; border-radius: 8px; font-size: 0.875rem; background: var(--primary); color: white; cursor: pointer;">Terapkan Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let debounceTimer;
+let isSearchActive = false;
+
+function debounceSearch() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        performSearch();
+    }, 500); // 500ms debounce
+}
+
+function performSearch() {
+    const search = document.getElementById('search-input').value;
+    isSearchActive = true;
+
+    const params = new URLSearchParams();
+
+    // Preserve existing filter parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+        if (key !== 'search' && key !== 'page') {
+            params.append(key, value);
+        }
+    });
+
+    if (search) params.append('search', search);
+
+    const url = '{{ route("admin.mitra.index") }}' + (params.toString() ? '?' + params.toString() : '');
+    window.location.href = url;
+}
+
+function applyFilters(formData) {
+    const params = new URLSearchParams();
+
+    // Add search if exists
+    const searchInput = document.getElementById('search-input');
+    if (searchInput && searchInput.value) {
+        params.append('search', searchInput.value);
+    }
+
+    // Add filter parameters
+    formData.forEach((value, key) => {
+        if (value && value.trim() !== '') {
+            params.append(key, value);
+        }
+    });
+
+    const url = '{{ route("admin.mitra.index") }}' + (params.toString() ? '?' + params.toString() : '');
+    window.location.href = url;
+}
+
+// Modal functionality
+document.getElementById('filter-btn').addEventListener('click', function() {
+    document.getElementById('filter-modal').style.display = 'flex';
+});
+
+document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('filter-modal').style.display = 'none';
+});
+
+// Close modal when clicking outside
+document.getElementById('filter-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
+});
+
+// Filter form submission
+document.getElementById('filter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    applyFilters(formData);
+    document.getElementById('filter-modal').style.display = 'none';
+});
+
+// Reset filter
+document.getElementById('reset-filter').addEventListener('click', function() {
+    document.querySelectorAll('#filter-form input, #filter-form select').forEach(element => {
+        element.value = '';
+    });
+});
+
+// Search input with improved UX
+document.getElementById('search-input').addEventListener('input', function() {
+    debounceSearch();
+});
+
+// Clear all filters
+document.getElementById('clear-filters').addEventListener('click', function() {
+    window.location.href = '{{ route("admin.mitra.index") }}';
+});
+
+// Improved UX: Keep focus on search input after page load if there was a search
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has('search') && urlParams.get('search').trim() !== '') {
+        // Focus on search input and place cursor at the end
+        searchInput.focus();
+        searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+    }
+});
+</script>
 @endsection

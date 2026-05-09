@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin;
 
 class PPDB extends Model
 {
@@ -22,6 +23,12 @@ class PPDB extends Model
         'tanggal_mulai' => 'datetime',
         'tanggal_selesai' => 'datetime',
     ];
+
+    public function getIsActiveAttribute()
+    {
+        $now = now();
+        return $this->tanggal_mulai <= $now && $this->tanggal_selesai >= $now;
+    }
 
     public function admin()
     {

@@ -20,11 +20,21 @@
 </div>
 
 <div class="table-container">
+    <div style="padding: 1.5rem; border-bottom: 1px solid var(--line); display: flex; gap: 1rem; align-items: center; background: #fff; flex-wrap: wrap;">
+        <div style="position: relative; flex: 1; min-width: 250px;">
+            <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted);"></i>
+            <input type="text" id="search-input" placeholder="Cari judul informasi PPDB..." class="form-input" style="padding-left: 2.5rem;" value="{{ request('search') }}">
+        </div>
+        <button id="clear-filters" class="btn" style="min-width: auto;">
+            <i data-lucide="x" style="width: 16px; height: 16px"></i> Clear
+        </button>
+    </div>
     <table class="admin-table">
         <thead>
             <tr>
                 <th>Judul Informasi</th>
                 <th>Periode Aktif</th>
+                <th>Status</th>
                 <th>Dibuat Oleh</th>
                 <th style="text-align: right;">Aksi</th>
             </tr>
@@ -38,6 +48,13 @@
                 </td>
                 <td>
                     <div style="font-size: 0.8125rem; font-weight: 500;">{{ $ppdb->tanggal_mulai->format('d M Y') }} - {{ $ppdb->tanggal_selesai->format('d M Y') }}</div>
+                </td>
+                <td>
+                    @if($ppdb->is_active)
+                        <span class="pill" style="background: #dcfce7; color: #166534;">Aktif</span>
+                    @else
+                        <span class="pill" style="background: #fee2e2; color: #991b1b;">Nonaktif</span>
+                    @endif
                 </td>
                 <td>
                     <span class="pill" style="background: var(--bg); color: var(--secondary);">{{ $ppdb->admin->name ?? 'Admin' }}</span>
@@ -59,7 +76,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="4" style="padding: 4rem 1.5rem; text-align: center; color: var(--muted);">
+                <td colspan="5" style="padding: 4rem 1.5rem; text-align: center; color: var(--muted);">
                     <i data-lucide="graduation-cap" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.2;"></i>
                     <div>Belum ada informasi PPDB.</div>
                 </td>
@@ -79,4 +96,32 @@
     </div>
     @endif
 </div>
+
+<script>
+let debounceTimer;
+
+function debounceSearch() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        performSearch();
+    }, 500); // 500ms debounce
+}
+
+function performSearch() {
+    const search = document.getElementById('search-input').value;
+
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+
+    const url = '{{ route("admin.ppdb.index") }}' + (params.toString() ? '?' + params.toString() : '');
+    window.location.href = url;
+}
+
+document.getElementById('search-input').addEventListener('input', debounceSearch);
+
+document.getElementById('clear-filters').addEventListener('click', function() {
+    document.getElementById('search-input').value = '';
+    window.location.href = '{{ route("admin.ppdb.index") }}';
+});
+</script>
 @endsection
