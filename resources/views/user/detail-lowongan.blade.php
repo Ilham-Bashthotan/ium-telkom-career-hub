@@ -31,6 +31,11 @@
         border-bottom: 2px solid var(--primary-light);
         color: var(--text);
     }
+    .btn-saved {
+        background: var(--bg);
+        color: var(--primary);
+        border-color: var(--primary);
+    }
 </style>
 @endsection
 
@@ -39,6 +44,8 @@
     <div style="margin-bottom: 1.5rem;">
         <a href="{{ route('user.lowongan.index') }}" class="btn" style="color: var(--muted); border: none;"><i data-lucide="arrow-left" style="width: 18px; height: 18px"></i> Kembali ke Lowongan</a>
     </div>
+
+
 
     <div class="detail-container">
         <div>
@@ -95,7 +102,13 @@
                     <button class="btn btn-primary btn-block" disabled style="opacity: 0.5; cursor: not-allowed; padding: 0.875rem; margin-bottom: 0.75rem;">Link Tidak Tersedia</button>
                 @endif
                 
-                <button class="btn btn-block"><i data-lucide="bookmark" style="width:16px;height:16px"></i> Simpan Lowongan</button>
+                <form action="{{ route('user.lowongan.save', $lowongan->lowongan_id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-block {{ $isSaved ? 'btn-saved' : '' }}" style="padding: 0.875rem;">
+                        <i data-lucide="{{ $isSaved ? 'bookmark-check' : 'bookmark' }}" style="width:16px;height:16px"></i> 
+                        {{ $isSaved ? 'Tersimpan' : 'Simpan Lowongan' }}
+                    </button>
+                </form>
                 
                 <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line);">
                     <p style="font-size: 0.75rem; color: var(--muted); text-align: center;">Dibagikan oleh tim rekrutmen resmi {{ $lowongan->perusahaan->nama_perusahaan }}.</p>

@@ -28,10 +28,10 @@ class AuthController extends Controller
 
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/user/home');
+            return redirect()->intended('/')->with('success', 'Selamat datang kembali, ' . Auth::user()->nama_lengkap . '!');
         }
 
-        return back()->withErrors([
+        return back()->with('error', 'Email atau password salah.')->withErrors([
             'email' => 'Email atau password salah.',
         ])->withInput($request->only('email'));
     }
@@ -45,10 +45,10 @@ class AuthController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/admin/dashboard')->with('success', 'Login Admin berhasil!');
         }
 
-        return back()->withErrors([
+        return back()->with('error', 'Kredensial admin tidak valid.')->withErrors([
             'email' => 'Kredensial admin tidak valid.',
         ])->withInput($request->only('email'));
     }
@@ -82,7 +82,7 @@ class AuthController extends Controller
 
         Auth::guard('web')->login($user);
 
-        return redirect('/user/home');
+        return redirect('/')->with('success', 'Registrasi berhasil! Selamat bergabung di Telkom Career Hub.');
     }
 
     public function logout(Request $request)
@@ -96,6 +96,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Anda telah berhasil keluar.');
     }
 }

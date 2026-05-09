@@ -44,7 +44,12 @@
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
         @foreach($mitras as $mitra)
-        <div class="mitra-card" onclick="window.location.href='{{ route('user.mitra.show', $mitra->perusahaan_id) }}'">
+        <div class="mitra-card" 
+             @auth
+                onclick="window.location.href='{{ route('user.mitra.show', $mitra->perusahaan_id) }}'"
+             @else
+                onclick="return guardNav(event, '{{ route('user.mitra.show', $mitra->perusahaan_id) }}')"
+             @endauth>
             <div class="mitra-logo">
                 @if($mitra->logo)
                     <img src="{{ asset('storage/' . $mitra->logo) }}" alt="{{ $mitra->nama_perusahaan }}" style="max-width: 100%; max-height: 100%;">

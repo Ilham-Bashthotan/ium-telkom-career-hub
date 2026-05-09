@@ -3,11 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\User\HomeController as UserHomeController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\LowonganController as UserLowonganController;
 use App\Http\Controllers\User\PerusahaanController as UserPerusahaanController;
-
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LowonganController as AdminLowonganController;
 use App\Http\Controllers\Admin\PerusahaanController as AdminPerusahaanController;
@@ -33,11 +31,11 @@ Route::prefix('user')->name('user.')->group(function () {
 
 // User Routes (Alumni / Umum) - Require Authentication
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
-    Route::get('/home', [UserHomeController::class, 'index'])->name('home');
     Route::get('/profil', [ProfileController::class, 'index'])->name('profil.index');
     Route::post('/profil', [ProfileController::class, 'update'])->name('profil.update');
     
     Route::get('/lowongan/{id}', [UserLowonganController::class, 'show'])->name('lowongan.show');
+    Route::post('/lowongan/{id}/save', [UserLowonganController::class, 'toggleSave'])->name('lowongan.save');
     Route::get('/mitra/{id}', [UserPerusahaanController::class, 'show'])->name('mitra.show');
 });
 

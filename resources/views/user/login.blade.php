@@ -31,11 +31,7 @@
             <p style="color: var(--muted); font-size: 0.875rem; margin-top: 0.5rem;">Masuk untuk mengelola karir Anda</p>
         </div>
 
-        @if($errors->any())
-            <div style="background: #fee2e2; color: #b91c1c; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                {{ $errors->first() }}
-            </div>
-        @endif
+
 
         <form action="{{ route('login.post') }}" method="POST">
             @csrf

@@ -40,11 +40,7 @@
       <p id="step-title" style="color: var(--muted); font-size: 0.875rem;">Lengkapi data diri Anda (Langkah 1/3)</p>
     </div>
 
-    @if($errors->any())
-        <div style="background: #fee2e2; color: #b91c1c; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.875rem;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+
 
     <div class="step-indicator">
       <div class="step-dot active" id="dot-1"></div>

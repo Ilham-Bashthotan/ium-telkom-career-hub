@@ -29,8 +29,8 @@
                 <div style="width:1px;height:24px;background:var(--line);margin:0 0.5rem"></div>
                 
                 @auth
-                    <a class="nav-link {{ request()->is('user/profil*') ? 'active' : '' }}" href="{{ route('user.profil.index') }}" style="display:flex;align-items:center"><i data-lucide="user" style="width:16px;height:16px;margin-right:8px"></i>Profil Saya</a>
-                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    <a class="nav-link {{ request()->is('user/profil*') ? 'active' : '' }}" href="{{ route('user.profil.index') }}" style="display:flex;align-items:center"><i data-lucide="user" style="width:16px;height:16px;margin-right:8px"></i>{{ Auth::user()->nama_lengkap }}</a>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;" onsubmit="return confirmLogout(event)">
                         @csrf
                         <button type="submit" class="nav-link" style="border:none;background:none;cursor:pointer;display:flex;align-items:center;color:var(--primary)"><i data-lucide="log-out" style="width:16px;height:16px;margin-right:8px"></i>Keluar</button>
                     </form>
@@ -59,8 +59,31 @@
                     <p style="color:var(--muted);font-size:0.875rem;line-height:1.6">Silakan masuk ke akun Anda untuk melihat daftar lowongan kerja secara lengkap dan mendapatkan akses ke fitur unggulan lainnya.</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-block" onclick="closeAuthModal()">Nanti Saja</button>
-                    <a href="{{ route('login') }}" class="btn btn-primary btn-block">Masuk / Daftar</a>
+                    <button class="btn btn-block" style="flex: 1" onclick="closeAuthModal()">Nanti Saja</button>
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-block" style="flex: 1">Masuk / Daftar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="modal-logout-confirm">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div class="modal-title">Konfirmasi Keluar</div>
+                    <div class="modal-close" onclick="closeLogoutModal()" style="border:none;background:none;font-size:1.25rem;cursor:pointer">✕</div>
+                </div>
+                <div class="modal-body" style="text-align:center">
+                    <div style="background:#fee2e2;color:#ef4444;width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+                        <i data-lucide="log-out" style="width:32px;height:32px"></i>
+                    </div>
+                    <h3 style="margin-bottom:0.75rem;font-size:1.25rem">Apakah Anda yakin?</h3>
+                    <p style="color:var(--muted);font-size:0.875rem;line-height:1.6">Anda akan keluar dari sesi akun saat ini dan perlu login kembali untuk mengakses fitur tertentu.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-block" style="flex: 1" onclick="closeLogoutModal()">Batal</button>
+                    <form action="{{ route('logout') }}" method="POST" style="flex: 1">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-block" style="background:#ef4444;border-color:#ef4444">Ya, Keluar</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -86,7 +109,7 @@
                     <div class="footer-col-title">Tautan Cepat</div>
                     <ul class="footer-links">
                         <li><a href="{{ route('home') }}">Beranda</a></li>
-                        <li><a href="{{ route('user.lowongan.index') }}">Lowongan Kerja</a></li>
+                        <li><a href="{{ route('user.lowongan.index') }}" onclick="return guardNav(event, '{{ route('user.lowongan.index') }}')">Lowongan Kerja</a></li>
                         <li><a href="{{ route('user.mitra.index') }}">Mitra Industri</a></li>
                     </ul>
                 </div>
@@ -112,10 +135,62 @@
         </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
+
+        // SweetAlert2 Toast configuration
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        // Show flash messages
+        @if(session('success'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('success') }}'
+            });
+        @endif
+
+        @if(session('error'))
+            Toast.fire({
+                icon: 'error',
+                title: '{{ session('error') }}'
+            });
+        @endif
+
+        @if(session('info'))
+            Toast.fire({
+                icon: 'info',
+                title: '{{ session('info') }}'
+            });
+        @endif
+
+        @if(session('warning'))
+            Toast.fire({
+                icon: 'warning',
+                title: '{{ session('warning') }}'
+            });
+        @endif
+
+        @if($errors->any())
+            Toast.fire({
+                icon: 'error',
+                title: '{{ $errors->first() }}'
+            });
+        @endif
+
+
         
         // Debounced observer to prevent lag from frequent DOM changes
         let timeout;
@@ -138,6 +213,18 @@
 
         function closeAuthModal() {
             const modal = document.getElementById('modal-auth-required');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function confirmLogout(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('modal-logout-confirm');
+            if (modal) modal.classList.add('active');
+            return false;
+        }
+
+        function closeLogoutModal() {
+            const modal = document.getElementById('modal-logout-confirm');
             if (modal) modal.classList.remove('active');
         }
     </script>

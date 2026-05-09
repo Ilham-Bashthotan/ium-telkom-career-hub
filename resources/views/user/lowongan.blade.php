@@ -14,6 +14,7 @@
         <aside>
             <div class="sidebar-box">
                 <form action="{{ route('user.lowongan.index') }}" method="GET">
+                    <!-- Search -->
                     <div style="margin-bottom: 1.5rem;">
                         <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Cari Posisi / Perusahaan</label>
                         <div style="position: relative;">
@@ -22,37 +23,57 @@
                         </div>
                     </div>
 
+                    <!-- Jurusan: Dropdown -->
                     <div style="margin-bottom: 1.5rem;">
                         <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Jurusan</label>
                         <select name="jurusan" style="width: 100%; padding: 0.75rem; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 0.875rem; background: white;">
                             <option value="">Semua Jurusan</option>
-                            @foreach($jurusans as $j)
-                                <option value="{{ $j->kode_jurusan }}" {{ request('jurusan') == $j->kode_jurusan ? 'selected' : '' }}>
-                                    {{ $j->kode_jurusan }} - {{ $j->nama_jurusan }}
+                            @foreach(['PPLG', 'TJKT', 'DKV', 'Animasi'] as $j)
+                                <option value="{{ $j }}" {{ request('jurusan') == $j ? 'selected' : '' }}>
+                                    {{ $j }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
+                    <!-- Lokasi: Checkbox -->
                     <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Tipe Pekerjaan</label>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Lokasi</label>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            @foreach(['Full-time', 'Internship', 'Freelance', 'Contract'] as $type)
+                            @foreach(['Bandung', 'Jakarta', 'Remote', 'Surabaya'] as $loc)
                             <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer;">
-                                <input type="radio" name="tipe" value="{{ $type }}" {{ request('tipe') == $type ? 'selected' : '' }}> {{ $type }}
+                                <input type="checkbox" name="lokasi[]" value="{{ $loc }}" {{ is_array(request('lokasi')) && in_array($loc, request('lokasi')) ? 'checked' : '' }}> {{ $loc }}
                             </label>
                             @endforeach
                         </div>
                     </div>
 
+                    <!-- Tipe Pekerjaan: Checkbox -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Tipe Pekerjaan</label>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            @foreach(['Full-time', 'Part-time', 'Contract', 'Internship'] as $type)
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer;">
+                                <input type="checkbox" name="tipe[]" value="{{ $type }}" {{ is_array(request('tipe')) && in_array($type, request('tipe')) ? 'checked' : '' }}> {{ str_replace('-', ' ', $type) }}
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Rentang Gaji: Dropdown -->
                     <div style="margin-bottom: 2rem;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Lokasi</label>
-                        <input type="text" name="lokasi" value="{{ request('lokasi') }}" placeholder="Contoh: Bandung, Jakarta..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 0.875rem;">
+                        <label style="display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.5rem;">Rentang Gaji</label>
+                        <select name="gaji" style="width: 100%; padding: 0.75rem; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 0.875rem; background: white;">
+                            <option value="">Semua Gaji</option>
+                            <option value="under_3" {{ request('gaji') == 'under_3' ? 'selected' : '' }}>&lt; 3jt</option>
+                            <option value="3_6" {{ request('gaji') == '3_6' ? 'selected' : '' }}>3-6jt</option>
+                            <option value="above_6" {{ request('gaji') == 'above_6' ? 'selected' : '' }}>&gt; 6jt</option>
+                        </select>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">Terapkan Filter</button>
-                    @if(request()->anyFilled(['search', 'jurusan', 'tipe', 'lokasi']))
-                        <a href="{{ route('user.lowongan.index') }}" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--secondary)">Reset Filter</a>
+                    @if(request()->anyFilled(['search', 'jurusan', 'tipe', 'lokasi', 'gaji']))
+                        <a href="{{ route('user.lowongan.index', ['reset' => 1]) }}" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--secondary)">Reset Filter</a>
                     @endif
                 </form>
             </div>
@@ -72,7 +93,12 @@
                 </div>
                 
                 @foreach($lowongans as $job)
-                <div class="job-card" onclick="window.location.href='{{ route('user.lowongan.show', $job->lowongan_id) }}'">
+                <div class="job-card" 
+                     @auth
+                        onclick="window.location.href='{{ route('user.lowongan.show', $job->lowongan_id) }}'"
+                     @else
+                        onclick="return guardNav(event, '{{ route('user.lowongan.show', $job->lowongan_id) }}')"
+                     @endauth>
                     <div class="job-card-header">
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <div style="width: 48px; height: 48px; background: #f1f5f9; border-radius: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary)">

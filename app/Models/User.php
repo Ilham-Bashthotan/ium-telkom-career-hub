@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function savedLowongans()
+    {
+        return $this->hasMany(SavedLowongan::class, 'user_id', 'user_id');
+    }
 }

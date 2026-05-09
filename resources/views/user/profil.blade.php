@@ -13,12 +13,13 @@
     }
     .profile-avatar-container {
         position: absolute;
-        bottom: -40px;
+        bottom: 0;
         left: 2.5rem;
         display: flex;
-        align-items: center; /* Changed from flex-end */
+        align-items: flex-end;
         gap: 1.5rem;
         width: calc(100% - 5rem);
+        transform: translateY(40px); /* Keeps avatar overlapping bottom */
     }
     .profile-avatar {
         width: 120px;
@@ -36,8 +37,8 @@
         flex-shrink: 0;
     }
     .profile-info-basic {
-        padding-top: 1rem;
-        margin-top: 30px; /* Offset for better positioning below the banner edge */
+        padding-bottom: 50px; /* Position text inside the red box */
+        color: white;
     }
     .detail-row {
         display: flex;
@@ -57,20 +58,15 @@
         <div class="profile-avatar-container">
             <div class="profile-avatar">{{ substr($user->nama_lengkap, 0, 2) }}</div>
             <div class="profile-info-basic">
-                <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem;">{{ $user->nama_lengkap }}</h1>
-                <p style="color: var(--secondary); font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;">
+                <h1 style="font-size: 1.75rem; font-weight: 800; color: white; margin-bottom: 0.25rem;">{{ $user->nama_lengkap }}</h1>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;">
                     <i data-lucide="mail" style="width: 14px; height: 14px"></i> {{ $user->email }}
                 </p>
             </div>
         </div>
     </div>
 
-    @if(session('success'))
-        <div style="background: #dcfce7; color: #166534; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 2rem; border: 1px solid #bbf7d0; display: flex; align-items: center; gap: 0.75rem;">
-            <i data-lucide="check-circle" style="width: 20px; height: 20px"></i>
-            {{ session('success') }}
-        </div>
-    @endif
+
 
     <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
         <div class="card" style="padding: 2.5rem;">
@@ -103,10 +99,39 @@
             </div>
         </div>
 
+        <div class="card" style="padding: 2.5rem; margin-top: 2rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem;">Lowongan Tersimpan</h2>
+            
+            @forelse($savedJobs as $saved)
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 1rem;">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="width: 40px; height: 40px; background: var(--bg); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary); font-size: 0.75rem;">
+                            {{ substr($saved->lowongan->perusahaan->nama_perusahaan, 0, 2) }}
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.875rem;">{{ $saved->lowongan->judul }}</div>
+                            <div style="font-size: 0.75rem; color: var(--muted);">{{ $saved->lowongan->perusahaan->nama_perusahaan }}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="{{ route('user.lowongan.show', $saved->lowongan_id) }}" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">Lihat</a>
+                        <form action="{{ route('user.lowongan.save', $saved->lowongan_id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; color: #ef4444; border-color: #fca5a5;">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            @empty
+                <div style="text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem;">
+                    Belum ada lowongan yang disimpan.
+                </div>
+            @endforelse
+        </div>
+
         <aside>
             <div class="card" style="text-align: center;">
                 <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem;">Pengaturan Akun</h3>
-                <form action="{{ route('logout') }}" method="POST">
+                <form action="{{ route('logout') }}" method="POST" onsubmit="return confirmLogout(event)">
                     @csrf
                     <button type="submit" class="btn btn-block" style="color: var(--primary); border-color: var(--primary);">
                         <i data-lucide="log-out" style="width: 16px; height: 16px"></i> Keluar dari Akun

@@ -14,7 +14,9 @@
             Platform karir eksklusif untuk siswa dan alumni SMK Telkom Bandung. Temukan lowongan kerja, magang, dan mitra industri terbaik dalam satu tempat.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center;">
-            <a href="{{ route('user.lowongan.index') }}" class="btn btn-primary" style="padding: 0.75rem 2rem; font-size: 1rem;">Cari Lowongan <i data-lucide="arrow-right" style="width: 18px; height: 18px"></i></a>
+            <a href="{{ route('user.lowongan.index') }}" 
+               onclick="return guardNav(event, '{{ route('user.lowongan.index') }}')"
+               class="btn btn-primary" style="padding: 0.75rem 2rem; font-size: 1rem;">Cari Lowongan <i data-lucide="arrow-right" style="width: 18px; height: 18px"></i></a>
             <a href="{{ route('user.mitra.index') }}" class="btn" style="padding: 0.75rem 2rem; font-size: 1rem;">Mitra Industri</a>
         </div>
     </div>
@@ -25,36 +27,34 @@
     </div>
     <div class="ppdb-carousel">
         <div class="ppdb-slides" id="ppdb-slides">
+            @forelse($ppdbs as $ppdb)
             <div class="ppdb-slide">
                 <div style="display: flex; gap: 2rem; align-items: center;">
                     <div style="flex: 1;">
-                        <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">PPDB SMK Telkom Bandung 2026/2027</h3>
-                        <p style="font-size: 1.125rem; opacity: 0.9; margin-bottom: 1.5rem;">Pendaftaran siswa baru telah dibuka! Pilih jurusan masa depanmu: PPLG, TJKT, DKV, atau Animasi.</p>
+                        <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">{{ $ppdb->judul }}</h3>
+                        <p style="font-size: 1.125rem; opacity: 0.9; margin-bottom: 1.5rem;">{{ $ppdb->konten }}</p>
                         <div style="display: flex; gap: 1rem; align-items: center; font-size: 0.875rem; font-weight: 600;">
-                            <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="calendar" style="width:16px;height:16px"></i> 1 April – 30 Juni 2026</span>
+                            <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="calendar" style="width:16px;height:16px"></i> {{ $ppdb->tanggal_mulai ? $ppdb->tanggal_mulai->format('d M') : '-' }} – {{ $ppdb->tanggal_selesai ? $ppdb->tanggal_selesai->format('d M Y') : '-' }}</span>
                             <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="map-pin" style="width:16px;height:16px"></i> Kampus Bandung</span>
                         </div>
                     </div>
-                    <div style="width: 300px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="graduation-cap" style="width: 80px; height: 80px; opacity: 0.5"></i>
+                    <div style="width: 300px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        @if($ppdb->banner_url)
+                            <img src="{{ asset('storage/' . $ppdb->banner_url) }}" alt="{{ $ppdb->judul }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            <i data-lucide="graduation-cap" style="width: 80px; height: 80px; opacity: 0.5"></i>
+                        @endif
                     </div>
                 </div>
             </div>
+            @empty
             <div class="ppdb-slide">
-                <div style="display: flex; gap: 2rem; align-items: center;">
-                    <div style="flex: 1;">
-                        <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">Open House & Campus Tour</h3>
-                        <p style="font-size: 1.125rem; opacity: 0.9; margin-bottom: 1.5rem;">Kunjungi kampus kami dan lihat fasilitas laboratorium standar industri yang kami miliki.</p>
-                        <div style="display: flex; gap: 1rem; align-items: center; font-size: 0.875rem; font-weight: 600;">
-                            <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="calendar" style="width:16px;height:16px"></i> 10 Mei 2026</span>
-                            <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="clock" style="width:16px;height:16px"></i> 08:00 - 15:00 WIB</span>
-                        </div>
-                    </div>
-                    <div style="width: 300px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="door-open" style="width: 80px; height: 80px; opacity: 0.5"></i>
-                    </div>
+                <div style="text-align: center;">
+                    <h3 style="font-size: 1.5rem; font-weight: 800;">Belum Ada Informasi PPDB</h3>
+                    <p style="opacity: 0.8;">Nantikan informasi pendaftaran siswa baru SMK Telkom Bandung di sini.</p>
                 </div>
             </div>
+            @endforelse
         </div>
         <div class="ppdb-nav">
             <button class="ppdb-btn" onclick="movePpdb(-1)"><i data-lucide="chevron-left"></i></button>
@@ -68,7 +68,9 @@
             <h2 style="font-size: 1.5rem; font-weight: 700;">Lowongan Terbaru</h2>
             <p style="font-size: 0.875rem; color: var(--muted)">Kesempatan karir terbaru untuk pengembangan potensimu.</p>
         </div>
-        <a href="{{ route('user.lowongan.index') }}" class="btn">Lihat Semua <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+        <a href="{{ route('user.lowongan.index') }}" 
+           onclick="return guardNav(event, '{{ route('user.lowongan.index') }}')"
+           class="btn">Lihat Semua <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
@@ -112,14 +114,25 @@
         <p style="font-size: 0.875rem; color: var(--muted)">Bekerja sama dengan lebih dari {{ $mitraCount }} perusahaan teknologi terkemuka.</p>
     </div>
     <div class="partner-grid">
-        <div class="logo-icon">TELKOM</div>
-        <div class="logo-icon">INDOSAT</div>
-        <div class="logo-icon">GOJEK</div>
-        <div class="logo-icon">TOKOPEDIA</div>
-        <div class="logo-icon">TRAVELOKA</div>
-        <div class="logo-icon">BUKALAPAK</div>
-        <div class="logo-icon">DANA</div>
-        <div class="logo-icon">OVO</div>
+        @foreach($partners as $partner)
+        <div class="logo-icon" 
+             @auth
+                onclick="window.location.href='{{ route('user.mitra.show', $partner->perusahaan_id) }}'"
+             @else
+                onclick="return guardNav(event, '{{ route('user.mitra.show', $partner->perusahaan_id) }}')"
+             @endauth
+             title="{{ $partner->nama_perusahaan }}">
+            @if($partner->logo)
+                <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->nama_perusahaan }}" style="max-width: 70%; max-height: 70%; object-fit: contain;">
+            @else
+                {{ substr($partner->nama_perusahaan, 0, 2) }}
+            @endif
+        </div>
+        @endforeach
+    </div>
+
+    <div style="margin-top: 2rem; text-align: center;">
+        <a href="{{ route('user.mitra.index') }}" class="btn">Lihat Semua Mitra <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
     </div>
 
 </div>
