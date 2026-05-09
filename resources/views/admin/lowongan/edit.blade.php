@@ -100,7 +100,7 @@
 
         <div style="margin-top: 2rem;">
             <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Deskripsi Pekerjaan <span style="color: var(--primary)">*</span></label>
-            <textarea name="deskripsi" rows="8" required placeholder="Tuliskan kualifikasi, tanggung jawab, dan detail pekerjaan lainnya..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--line); border-radius: 8px; outline: none; font-family: inherit; resize: vertical;">{{ $lowongan->deskripsi }}</textarea>
+            <x-rich-text-editor name="deskripsi" :value="$lowongan->deskripsi" placeholder="Tuliskan kualifikasi, tanggung jawab, dan detail pekerjaan lainnya..." />
         </div>
 
         <div style="margin-top: 2rem;">

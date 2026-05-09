@@ -95,8 +95,8 @@
         </div>
 
         <div style="margin-top: 1.5rem;">
-            <label class="form-label">Deskripsi Pekerjaan <span style="color: var(--primary)">*</span></label>
-            <textarea name="deskripsi" rows="8" required placeholder="Tuliskan kualifikasi, tanggung jawab, dan detail pekerjaan lainnya..." class="form-input" style="font-family: inherit; resize: vertical;"></textarea>
+            <label class="form-label" style="display: block; margin-bottom: 0.5rem;">Deskripsi Pekerjaan <span style="color: var(--primary)">*</span></label>
+            <x-rich-text-editor name="deskripsi" placeholder="Tuliskan kualifikasi, tanggung jawab, dan detail pekerjaan lainnya..." />
         </div>
 
         <div style="margin-top: 1.5rem;">

@@ -240,29 +240,92 @@
             background: #94a3b8;
         }
 
+        .sidebar-toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            margin-left: -0.5rem;
+            border-radius: var(--radius-sm);
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-toggle-btn:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(17, 24, 39, 0.4);
+            z-index: 90;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.sidebar-expanded .sidebar-overlay {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 1024px) {
-            :root {
+            .sidebar-toggle-btn {
+                display: flex;
+            }
+            body:not(.sidebar-expanded) {
                 --sidebar-width: 80px;
             }
-            .sidebar-header span, .sidebar-link span, .sidebar-footer span, .sidebar-header div:last-child {
+            body:not(.sidebar-expanded) .sidebar-header span, 
+            body:not(.sidebar-expanded) .sidebar-link span, 
+            body:not(.sidebar-expanded) .sidebar-footer span, 
+            body:not(.sidebar-expanded) .sidebar-header div:last-child {
                 display: none;
             }
-            .sidebar-header {
+            body:not(.sidebar-expanded) .sidebar-header {
                 justify-content: center;
                 padding: 1.5rem 0;
             }
-            .sidebar-link {
+            body:not(.sidebar-expanded) .sidebar-link {
                 justify-content: center;
                 padding: 0.75rem;
             }
-            .sidebar-nav {
+            body:not(.sidebar-expanded) .sidebar-nav {
                 padding: 1.5rem 0.5rem;
+            }
+            body.sidebar-expanded {
+                --sidebar-width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body:not(.sidebar-expanded) {
+                --sidebar-width: 0px;
+            }
+            body:not(.sidebar-expanded) .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            body.sidebar-expanded {
+                --sidebar-width: 0px; /* Don't push content */
+            }
+            body.sidebar-expanded .admin-sidebar {
+                transform: translateX(0);
+                width: 280px;
+                box-shadow: 4px 0 24px rgba(0,0,0,0.2);
             }
         }
     </style>
     @yield('styles')
+    @stack('styles')
 </head>
 <body>
+    <div class="sidebar-overlay" onclick="document.body.classList.remove('sidebar-expanded')"></div>
     <div class="admin-shell">
         <!-- Sidebar -->
         <aside class="admin-sidebar">
@@ -312,7 +375,10 @@
         <main class="admin-main">
             <!-- Topbar -->
             <header class="admin-topbar">
-                <div class="topbar-left">
+                <div class="topbar-left" style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="sidebar-toggle-btn" onclick="document.body.classList.toggle('sidebar-expanded')">
+                        <i data-lucide="menu"></i>
+                    </button>
                     <div style="font-weight: 600; color: var(--muted); font-size: 0.875rem">Panel Administrasi</div>
                 </div>
                 
@@ -344,5 +410,6 @@
         lucide.createIcons();
     </script>
     @yield('scripts')
+    @stack('scripts')
 </body>
 </html>
