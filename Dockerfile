@@ -53,6 +53,7 @@ RUN echo '<Directory /app/public>\n  Options Indexes FollowSymLinks\n  AllowOver
 RUN php artisan key:generate --force || true
 RUN mkdir -p database && touch database/database.sqlite
 RUN php artisan migrate --force --no-interaction || true
+RUN php artisan db:seed --force --no-interaction || true
 RUN php artisan storage:link || true
 
 # Set permissions
