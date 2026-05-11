@@ -1,7 +1,10 @@
-# Build stage
-FROM composer:2.7 AS builder
+# Build stage dengan PHP 8.4
+FROM php:8.4-cli AS builder
 
 WORKDIR /app
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy composer files
 COPY composer.json composer.lock ./
