@@ -64,7 +64,7 @@
                         <a href="{{ route('admin.ppdb.edit', $ppdb->ppdb_id) }}" class="btn btn-sm" style="padding: 6px;">
                             <i data-lucide="edit-3" style="width: 14px; height: 14px; color: var(--secondary);"></i>
                         </a>
-                        <form action="{{ route('admin.ppdb.destroy', $ppdb->ppdb_id) }}" method="POST" onsubmit="return confirm('Hapus informasi ini?')" style="display: inline;">
+                        <form action="{{ route('admin.ppdb.destroy', $ppdb->ppdb_id) }}" method="POST" onsubmit="return confirmDelete(event, '{{ route('admin.ppdb.destroy', $ppdb->ppdb_id) }}')" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm" style="padding: 6px; color: #ef4444;">

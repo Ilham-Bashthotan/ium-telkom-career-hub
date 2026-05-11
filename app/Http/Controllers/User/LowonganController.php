@@ -13,7 +13,11 @@ class LowonganController extends Controller
     public function index(Request $request)
     {
         $query = Lowongan::with(['perusahaan', 'jurusan'])
-                ->where('status', 'aktif');
+                ->where('status', 'aktif')
+                ->where(function($q) {
+                    $q->whereNull('tanggal_expired')
+                      ->orWhere('tanggal_expired', '>=', now());
+                });
 
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {

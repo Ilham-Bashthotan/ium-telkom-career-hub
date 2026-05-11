@@ -36,6 +36,15 @@
         color: var(--primary);
         border-color: var(--primary);
     }
+    .description-content a {
+        color: #2563eb;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+    .description-content a:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+    }
 </style>
 @endsection
 
@@ -60,7 +69,7 @@
                             <p style="color: var(--primary); font-weight: 600;">{{ $lowongan->perusahaan->nama_perusahaan }}</p>
                         </div>
                     </div>
-                    <span class="pill" style="padding: 0.5rem 1rem; font-size: 0.875rem;">{{ $lowongan->jurusan->kode_jurusan }}</span>
+                    <span class="pill" style="padding: 0.5rem 1rem; font-size: 0.875rem;">{{ $lowongan->jurusan->kode_jurusan ?? 'Umum' }}</span>
                 </div>
                 <div class="job-meta">
                     <span class="job-tag"><i data-lucide="clock" style="width:14px;height:14px;margin-right:4px"></i> {{ $lowongan->tipe_pekerjaan }}</span>
@@ -72,8 +81,8 @@
             <div class="detail-body">
                 <div class="detail-section" style="margin-bottom: 2.5rem;">
                     <h2 class="detail-section-title">Deskripsi Pekerjaan</h2>
-                    <div style="color: var(--secondary); line-height: 1.8;">
-                        {!! nl2br(e($lowongan->deskripsi)) !!}
+                    <div class="description-content" style="color: var(--text); line-height: 1.8;">
+                        {!! $lowongan->deskripsi !!}
                     </div>
                 </div>
 

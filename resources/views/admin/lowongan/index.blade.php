@@ -1,5 +1,37 @@
 @extends('layouts.admin')
 
+@push('styles')
+<style>
+    .filter-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.375rem 0.75rem;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+    .filter-pill a {
+        color: var(--muted);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+    .filter-pill a:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+</style>
+@endpush
+
 @section('title', 'Manajemen Lowongan')
 
 @section('content')
@@ -33,6 +65,50 @@
         </button>
     </div>
 
+    @if(request()->anyFilled(['search', 'status', 'tipe_pekerjaan', 'lokasi', 'perusahaan']))
+    <div style="padding: 1.25rem 1.5rem 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; background: #fff; border-bottom: 1px solid var(--line);">
+        <div style="font-size: 0.75rem; color: var(--muted); font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin-right: 0.25rem;">
+            <i data-lucide="list-filter" style="width: 14px; height: 14px"></i>
+            FILTER AKTIF:
+        </div>
+        
+        @if(request('search'))
+            <div class="filter-pill">
+                <span>"{{ request('search') }}"</span>
+                <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('status'))
+            <div class="filter-pill">
+                <span>Status: {{ ucfirst(request('status')) }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['status' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('tipe_pekerjaan'))
+            <div class="filter-pill">
+                <span>Tipe: {{ request('tipe_pekerjaan') }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['tipe_pekerjaan' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('lokasi'))
+            <div class="filter-pill">
+                <span>Lokasi: {{ request('lokasi') }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['lokasi' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('perusahaan'))
+            <div class="filter-pill">
+                <span>Perusahaan: {{ request('perusahaan') }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['perusahaan' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+    </div>
+    @endif
+
     <table class="admin-table">
         <thead>
             <tr>
@@ -48,7 +124,7 @@
             <tr>
                 <td>
                     <div style="font-weight: 700; color: var(--text);">{{ $lowongan->judul }}</div>
-                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem;">{{ $lowongan->jurusan->nama_jurusan }}</div>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem;">{{ $lowongan->jurusan->nama_jurusan ?? 'Semua Jurusan' }}</div>
                 </td>
                 <td>
                     <div style="font-size: 0.875rem; font-weight: 500;">{{ $lowongan->perusahaan->nama_perusahaan }}</div>
@@ -68,7 +144,7 @@
                         <a href="{{ route('admin.lowongan.edit', $lowongan->lowongan_id) }}" class="btn btn-sm" style="padding: 6px;">
                             <i data-lucide="edit-3" style="width: 14px; height: 14px; color: var(--secondary);"></i>
                         </a>
-                        <form action="{{ route('admin.lowongan.destroy', $lowongan->lowongan_id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?')" style="display: inline;">
+                        <form action="{{ route('admin.lowongan.destroy', $lowongan->lowongan_id) }}" method="POST" onsubmit="return confirmDelete(event, '{{ route('admin.lowongan.destroy', $lowongan->lowongan_id) }}')" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm" style="padding: 6px; color: #ef4444;">

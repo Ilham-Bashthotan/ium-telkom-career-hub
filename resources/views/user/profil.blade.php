@@ -115,7 +115,7 @@
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <a href="{{ route('user.lowongan.show', $saved->lowongan_id) }}" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">Lihat</a>
-                        <form action="{{ route('user.lowongan.save', $saved->lowongan_id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('user.lowongan.save', $saved->lowongan_id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(event, this)">
                             @csrf
                             <button type="submit" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; color: #ef4444; border-color: #fca5a5;">Hapus</button>
                         </form>
@@ -180,4 +180,50 @@
         </form>
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="modal-delete-confirm">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title">Hapus Lowongan</div>
+            <div class="modal-close" onclick="closeDeleteModal()" style="border:none;background:none;font-size:1.25rem;cursor:pointer">✕</div>
+        </div>
+        <div class="modal-body" style="text-align:center">
+            <div style="background:#fee2e2;color:#ef4444;width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+                <i data-lucide="trash-2" style="width:32px;height:32px"></i>
+            </div>
+            <h3 style="margin-bottom:0.75rem;font-size:1.25rem">Hapus dari Simpanan?</h3>
+            <p style="color:var(--muted);font-size:0.875rem;line-height:1.6">Lowongan ini akan dihapus dari daftar simpanan Anda. Anda tetap dapat mencarinya kembali nanti di halaman lowongan.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-block" style="flex: 1" onclick="closeDeleteModal()">Batal</button>
+            <button type="button" class="btn btn-primary btn-block" style="background:#ef4444;border-color:#ef4444;flex: 1" onclick="executeDelete()">Ya, Hapus</button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    let formToSubmit = null;
+
+    function confirmDelete(event, form) {
+        if (event) event.preventDefault();
+        formToSubmit = form;
+        const modal = document.getElementById('modal-delete-confirm');
+        if (modal) modal.classList.add('active');
+        return false;
+    }
+
+    function executeDelete() {
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('modal-delete-confirm');
+        if (modal) modal.classList.remove('active');
+    }
+</script>
 @endsection

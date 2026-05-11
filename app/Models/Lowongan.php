@@ -9,6 +9,18 @@ class Lowongan extends Model
     protected $table = 'lowongans';
     protected $primaryKey = 'lowongan_id';
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($lowongan) {
+            // Automatically set status to nonaktif only if deadline has passed the entire day
+            if ($lowongan->tanggal_expired && $lowongan->tanggal_expired->endOfDay()->isPast()) {
+                $lowongan->status = 'nonaktif';
+            }
+        });
+    }
+
     protected $fillable = [
         'judul',
         'deskripsi',
@@ -29,6 +41,11 @@ class Lowongan extends Model
         'tanggal_posting' => 'datetime',
         'tanggal_expired' => 'datetime',
     ];
+
+    public function getIsExpiredAttribute()
+    {
+        return $this->tanggal_expired && $this->tanggal_expired->isPast();
+    }
 
     public function perusahaan()
     {

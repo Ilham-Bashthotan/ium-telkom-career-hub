@@ -93,11 +93,21 @@
       <div class="reg-step" id="step-3">
         <div style="margin-bottom: 1.25rem;">
           <label class="form-label">Buat Password</label>
-          <input type="password" name="password" class="form-input" placeholder="Minimal 8 karakter" required>
+          <div style="position: relative;">
+            <input type="password" name="password" id="reg-password" class="form-input" style="padding-right: 3rem;" placeholder="Minimal 8 karakter" required>
+            <button type="button" onclick="togglePasswordVisibility('reg-password', 'eye-reg')" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                <i data-lucide="eye" id="eye-reg" style="width: 18px; height: 18px"></i>
+            </button>
+          </div>
         </div>
         <div style="margin-bottom: 1.5rem;">
           <label class="form-label">Konfirmasi Password</label>
-          <input type="password" name="password_confirmation" class="form-input" placeholder="Ulangi password" required>
+          <div style="position: relative;">
+            <input type="password" name="password_confirmation" id="reg-password-confirm" class="form-input" style="padding-right: 3rem;" placeholder="Ulangi password" required>
+            <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', 'eye-confirm')" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                <i data-lucide="eye" id="eye-confirm" style="width: 18px; height: 18px"></i>
+            </button>
+          </div>
         </div>
         <p style="font-size: 0.75rem; color: var(--muted); line-height: 1.5;">
           Dengan mendaftar, Anda menyetujui <a href="#" style="color: var(--primary); font-weight: 600;">Syarat & Ketentuan</a> serta <a href="#" style="color: var(--primary); font-weight: 600;">Kebijakan Privasi</a> Telkom Career Hub.
@@ -125,27 +135,80 @@
       "Buat Akun Keamanan (Langkah 3/3)"
     ];
 
-    function changeStep(dir) {
-      if (dir === 1 && currentStep === 3) {
-        document.getElementById('reg-form').submit();
+    async function changeStep(dir) {
+      if (dir === -1) {
+        moveStep(-1);
         return;
       }
 
-      // Basic validation for current step
+      // FE Basic Validation
       const currentStepEl = document.getElementById('step-' + currentStep);
-      const inputs = currentStepEl.querySelectorAll('input[required]');
-      let valid = true;
-      inputs.forEach(input => {
-        if (!input.value) {
-            input.style.borderColor = 'var(--primary)';
-            valid = false;
-        } else {
-            input.style.borderColor = 'var(--line)';
+      const requiredInputs = currentStepEl.querySelectorAll('[required]');
+      let feValid = true;
+      
+      clearErrors();
+
+      requiredInputs.forEach(input => {
+        if (!input.value.trim()) {
+            showError(input, 'Field ini wajib diisi');
+            feValid = false;
         }
       });
 
-      if (dir === 1 && !valid) return;
+      if (!feValid) return;
 
+      // BE Validation via AJAX
+      const formData = new FormData(document.getElementById('reg-form'));
+      formData.append('step', currentStep);
+
+      // Disable button during loading
+      const btnNext = document.getElementById('btn-next');
+      const originalText = btnNext.textContent;
+      btnNext.disabled = true;
+      btnNext.textContent = 'Memvalidasi...';
+
+      try {
+        const response = await fetch('{{ route("register.validate") }}', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+          },
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          if (result.errors) {
+            Object.keys(result.errors).forEach(key => {
+              const input = document.querySelector(`[name="${key}"]`);
+              if (input) showError(input, result.errors[key][0]);
+            });
+          }
+          btnNext.disabled = false;
+          btnNext.textContent = originalText;
+          return;
+        }
+
+        // If step 3 and valid, submit final form
+        if (currentStep === 3) {
+          document.getElementById('reg-form').submit();
+          return;
+        }
+
+        // If valid, move to next step
+        moveStep(1);
+      } catch (error) {
+        console.error('Validation error:', error);
+        alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+      } finally {
+        btnNext.disabled = false;
+        btnNext.textContent = originalText;
+      }
+    }
+
+    function moveStep(dir) {
       // Hide current
       document.getElementById('step-' + currentStep).classList.remove('active');
       document.getElementById('dot-' + currentStep).classList.remove('active');
@@ -160,6 +223,39 @@
       // Update buttons
       document.getElementById('btn-prev').style.display = currentStep > 1 ? 'block' : 'none';
       document.getElementById('btn-next').textContent = currentStep === 3 ? 'Daftar Sekarang' : 'Lanjutkan';
+    }
+
+    function showError(input, message) {
+      input.style.borderColor = 'var(--primary)';
+      const errorEl = document.createElement('div');
+      errorEl.className = 'error-msg';
+      errorEl.style.color = 'var(--primary)';
+      errorEl.style.fontSize = '0.75rem';
+      errorEl.style.marginTop = '0.25rem';
+      errorEl.style.fontWeight = '500';
+      errorEl.textContent = message;
+      input.parentNode.appendChild(errorEl);
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.error-msg').forEach(el => el.remove());
+      document.querySelectorAll('.form-input, .form-select').forEach(el => {
+        el.style.borderColor = 'var(--line)';
+      });
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
     }
   </script>
 </body>

@@ -40,11 +40,26 @@
 
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                 <div>
-                    <label class="form-label">Banner PPDB</label>
-                    <input type="file" name="banner_url" accept="image/*" class="form-input">
-                    @if($ppdb->banner_url)
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted);">Banner saat ini: <strong>{{ basename($ppdb->banner_url) }}</strong></p>
-                    @endif
+                    <label class="form-label">Banner PPDB <span style="font-size: 0.75rem; color: var(--muted); font-weight: 400;">(Maks. 2MB)</span></label>
+                    <div class="upload-zone" id="drop-zone" onclick="document.getElementById('banner-input').click()">
+                        <input type="file" name="banner_url" id="banner-input" accept="image/*" style="display: none;">
+                        
+                        @php
+                            $hasBanner = isset($ppdb) && $ppdb->banner_url;
+                        @endphp
+
+                        <div class="upload-content" id="upload-content" style="{{ $hasBanner ? 'display: none;' : '' }}">
+                            <i data-lucide="image" style="width: 40px; height: 40px; color: var(--muted); margin-bottom: 0.75rem;"></i>
+                            <p style="font-weight: 600; color: var(--text); font-size: 0.875rem;">Klik atau seret banner ke sini</p>
+                            <p style="font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem;">PNG, JPG, JPEG atau SVG</p>
+                        </div>
+
+                        <div id="preview-container" style="{{ $hasBanner ? 'display: flex;' : 'display: none;' }} flex-direction: column; align-items: center; gap: 0.5rem;">
+                            <img id="banner-preview" src="{{ $hasBanner ? asset('storage/' . $ppdb->banner_url) : '' }}" style="max-height: 120px; border-radius: 8px; border: 1px solid var(--line);">
+                            <p id="filename-display" style="font-size: 0.75rem; color: var(--muted); font-weight: 500;">{{ $hasBanner ? 'Banner Tersimpan' : '' }}</p>
+                            <button type="button" id="remove-banner" style="background: none; border: none; color: var(--primary); font-size: 0.75rem; font-weight: 700; cursor: pointer; text-decoration: underline;">Ganti Banner</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -65,4 +80,6 @@
         </div>
     </form>
 </div>
+
+@include('admin.ppdb._scripts')
 @endsection

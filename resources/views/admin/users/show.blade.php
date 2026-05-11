@@ -20,7 +20,7 @@
         <a href="{{ route('admin.users.index') }}" class="btn">
             <i data-lucide="arrow-left" style="width: 16px; height: 16px"></i> Kembali
         </a>
-        <form action="{{ route('admin.users.destroy', $user->user_id) }}" method="POST" onsubmit="return confirm('Hapus user ini?')">
+        <form action="{{ route('admin.users.destroy', $user->user_id) }}" method="POST" onsubmit="return confirmDelete(event, '{{ route('admin.users.destroy', $user->user_id) }}')">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn" style="color: #ef4444; border-color: #fecaca;">
@@ -37,7 +37,9 @@
         </div>
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">{{ $user->nama_lengkap }}</h3>
         <p style="color: var(--muted); font-size: 0.875rem; margin-bottom: 1.5rem;">{{ $user->email }}</p>
-        <span class="pill" style="background: #eff6ff; color: #3b82f6;">Alumni</span>
+        <span class="pill" style="{{ $user->is_alumni ? 'background: #eff6ff; color: #3b82f6;' : 'background: #f0fdf4; color: #16a34a;' }}">
+            {{ $user->is_alumni ? 'Alumni' : 'Siswa' }}
+        </span>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -56,8 +58,8 @@
                     <div style="font-weight: 600;">{{ $user->email }}</div>
                 </div>
                 <div>
-                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Role Sistem</label>
-                    <div style="font-weight: 600;">User / Alumni</div>
+                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Nomor Telepon</label>
+                    <div style="font-weight: 600;">{{ $user->no_hp ?? '-' }}</div>
                 </div>
                 <div>
                     <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Bergabung Sejak</label>
@@ -66,10 +68,30 @@
             </div>
         </div>
 
-        <div class="card" style="border-style: dashed; background: var(--bg);">
-            <div style="text-align: center; padding: 2rem; color: var(--muted);">
-                <i data-lucide="lock" style="width: 32px; height: 32px; margin-bottom: 1rem; opacity: 0.3;"></i>
-                <p style="font-size: 0.875rem;">Data profil tambahan (alamat, telepon, portofolio) belum dilengkapi oleh pengguna.</p>
+        <div class="card">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                <i data-lucide="briefcase" style="width: 20px; height: 20px; color: var(--primary);"></i>
+                Detail Status & Pekerjaan
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Status Alumni</label>
+                    <div style="font-weight: 600;">{{ $user->is_alumni ? 'Ya (Alumni)' : 'Bukan (Siswa/Umum)' }}</div>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Status Pekerjaan</label>
+                    <div style="font-weight: 600;">
+                        @if($user->status_pekerjaan)
+                            <span class="pill" style="background: #f1f5f9; color: #475569; font-size: 0.75rem;">{{ $user->status_pekerjaan }}</span>
+                        @else
+                            -
+                        @endif
+                    </div>
+                </div>
+                <div style="grid-column: span 2;">
+                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Tempat Kerja / Instansi</label>
+                    <div style="font-weight: 600;">{{ $user->tempat_kerja ?? 'Belum ada data' }}</div>
+                </div>
             </div>
         </div>
     </div>

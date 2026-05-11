@@ -16,9 +16,14 @@ class HomeController extends Controller
             ->latest('tanggal_posting')
             ->take(6)
             ->get();
-            
+
         $mitraCount = Perusahaan::where('is_mitra', true)->count();
-        $partners = Perusahaan::where('is_mitra', true)->latest()->take(8)->get();
+        $partners = Perusahaan::where('is_mitra', true)
+            ->withCount('lowongans')
+            ->orderByDesc('lowongans_count')
+            ->orderBy('nama_perusahaan')
+            ->take(8)
+            ->get();
         $ppdbs = PPDB::latest()->get();
 
         return view('index', compact('latestLowongans', 'mitraCount', 'partners', 'ppdbs'));
