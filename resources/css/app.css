@@ -53,7 +53,7 @@
   }
 
   .btn-primary { 
-    @apply bg-brand text-white font-bold py-2 px-6 rounded-xl shadow-lg shadow-brand/20 hover:bg-brand-dark hover:shadow-xl hover:shadow-brand/30 transition-all active:scale-[0.98]; 
+    @apply bg-brand-500 text-white font-bold py-2 px-6 rounded-xl shadow-lg shadow-brand-500/20 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-500/30 transition-all active:scale-[0.98]; 
     border: none;
   }
   
@@ -63,11 +63,11 @@
 
   .form-label { @apply block mb-1.5 text-xs text-gray-500 uppercase font-bold tracking-wider; }
   .form-input, .form-select { 
-    @apply w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50/50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all; 
+    @apply w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50/50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-brand-500/10 focus:border-brand-500 transition-all; 
   }
 
   .pill { 
-    @apply inline-flex items-center px-3 py-1 rounded-full bg-brand-light text-brand text-[10px] font-bold uppercase tracking-tight; 
+    @apply inline-flex items-center px-3 py-1 rounded-full bg-brand-50 text-brand-500 text-[10px] font-bold uppercase tracking-tight; 
   }
   
   .pill-gray {

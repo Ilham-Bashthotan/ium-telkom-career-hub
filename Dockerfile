@@ -3,15 +3,22 @@ FROM php:8.4-cli AS builder
 
 WORKDIR /app
 
-# Install system dependencies untuk composer dan git
+# Install system dependencies untuk composer, git, dan build tools
 RUN apt-get update && apt-get install -y \
     git \
     curl \
     unzip \
+    build-essential \
+    autoconf \
+    pkg-config \
+    libsqlite3-dev \
+    zlib1g-dev \
+    libzip-dev \
+    libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions yang mungkin diperlukan
-RUN docker-php-ext-install pdo sqlite3
+# Compile and enable PHP extensions yang diperlukan (PDO + SQLite)
+RUN docker-php-ext-install pdo pdo_sqlite
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -55,6 +62,9 @@ COPY . .
 
 # Create database directory
 RUN mkdir -p database && chmod -R 775 database storage bootstrap/cache
+
+# Remove cached bootstrap files so production doesn't boot stale dev providers
+RUN rm -f bootstrap/cache/*.php
 
 # Install Node dependencies dan build assets
 RUN npm ci && npm run build
