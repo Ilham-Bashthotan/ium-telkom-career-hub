@@ -3,6 +3,16 @@ FROM php:8.4-cli AS builder
 
 WORKDIR /app
 
+# Install system dependencies untuk composer dan git
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions yang mungkin diperlukan
+RUN docker-php-ext-install pdo sqlite3
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -26,6 +36,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     npm \
     && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions untuk SQLite
+RUN docker-php-ext-install pdo pdo_sqlite
 
 # Enable Apache modules
 RUN a2enmod rewrite
