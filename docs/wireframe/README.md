@@ -49,48 +49,48 @@
 
 ### 1. USER
 
-| Atribut            | Tipe      | Keterangan                           |
-| ------------------ | --------- | ------------------------------------ |
-| **user_id** _(PK)_ | INT       | Primary key                          |
-| nama_lengkap       | VARCHAR   | Nama lengkap user                    |
-| email              | VARCHAR   | Email pribadi (unik)                 |
-| no_hp              | VARCHAR   | Nomor HP                             |
-| password           | VARCHAR   | Password terenkripsi                 |
-| is_alumni          | BOOLEAN   | Apakah alumni SMK Telkom             |
-| status_pekerjaan   | ENUM      | `belum_bekerja` / `sedang_bekerja` / `wirausaha` |
+| Atribut            | Tipe      | Keterangan                                          |
+| ------------------ | --------- | --------------------------------------------------- |
+| **user_id** _(PK)_ | INT       | Primary key                                         |
+| nama_lengkap       | VARCHAR   | Nama lengkap user                                   |
+| email              | VARCHAR   | Email pribadi (unik)                                |
+| no_hp              | VARCHAR   | Nomor HP                                            |
+| password           | VARCHAR   | Password terenkripsi                                |
+| is_alumni          | BOOLEAN   | Apakah alumni SMK Telkom                            |
+| status_pekerjaan   | ENUM      | `belum_bekerja` / `sedang_bekerja` / `wirausaha`    |
 | tempat_kerja       | VARCHAR   | Diisi nama perusahaan jika sudah bekerja (nullable) |
-| created_at         | TIMESTAMP | Tanggal registrasi                   |
+| created_at         | TIMESTAMP | Tanggal registrasi                                  |
 
 ### 2. LOWONGAN
 
-| Atribut                  | Tipe    | Keterangan                       |
-| ------------------------ | ------- | -------------------------------- |
-| **lowongan_id** _(PK)_   | INT     | Primary key                      |
-| judul                    | VARCHAR | Judul posisi lowongan            |
-| deskripsi                | TEXT    | Deskripsi pekerjaan              |
-| link_apply               | VARCHAR | Link form apply milik perusahaan |
-| sumber                   | ENUM    | `manual` / `crawl`               |
-| status                   | ENUM    | `draft` / `aktif` / `nonaktif`   |
-| tanggal_posting          | DATE    | Tanggal lowongan diposting       |
-| tanggal_expired          | DATE    | Tanggal lowongan berakhir        |
-| lokasi                   | VARCHAR | Lokasi kerja (contoh: Bandung, Remote) |
+| Atribut                  | Tipe    | Keterangan                                         |
+| ------------------------ | ------- | -------------------------------------------------- |
+| **lowongan_id** _(PK)_   | INT     | Primary key                                        |
+| judul                    | VARCHAR | Judul posisi lowongan                              |
+| deskripsi                | TEXT    | Deskripsi pekerjaan                                |
+| link_apply               | VARCHAR | Link form apply milik perusahaan                   |
+| sumber                   | ENUM    | `manual` / `crawl`                                 |
+| status                   | ENUM    | `draft` / `aktif` / `nonaktif`                     |
+| tanggal_posting          | DATE    | Tanggal lowongan diposting                         |
+| tanggal_expired          | DATE    | Tanggal lowongan berakhir                          |
+| lokasi                   | VARCHAR | Lokasi kerja (contoh: Bandung, Remote)             |
 | tipe_pekerjaan           | ENUM    | `Full-time`, `Part-time`, `Internship`, `Contract` |
-| gaji                     | VARCHAR | Kisaran gaji (opsional)          |
-| **perusahaan_id** _(FK)_ | INT     | Referensi ke tabel PERUSAHAAN    |
-| **jurusan_id** _(FK)_    | INT     | Referensi ke tabel JURUSAN       |
-| **admin_id** _(FK)_      | INT     | Admin yang memposting            |
+| gaji                     | VARCHAR | Kisaran gaji (opsional)                            |
+| **perusahaan_id** _(FK)_ | INT     | Referensi ke tabel PERUSAHAAN                      |
+| **jurusan_id** _(FK)_    | INT     | Referensi ke tabel JURUSAN                         |
+| **admin_id** _(FK)_      | INT     | Admin yang memposting                              |
 
 ### 3. PERUSAHAAN
 
-| Atribut                  | Tipe    | Keterangan                             |
-| ------------------------ | ------- | -------------------------------------- |
-| **perusahaan_id** _(PK)_ | INT     | Primary key                            |
-| nama_perusahaan          | VARCHAR | Nama perusahaan                        |
-| deskripsi                | TEXT    | Deskripsi singkat perusahaan           |
+| Atribut                  | Tipe    | Keterangan                               |
+| ------------------------ | ------- | ---------------------------------------- |
+| **perusahaan_id** _(PK)_ | INT     | Primary key                              |
+| nama_perusahaan          | VARCHAR | Nama perusahaan                          |
+| deskripsi                | TEXT    | Deskripsi singkat perusahaan             |
 | sektor_industri          | VARCHAR | Bidang industri (contoh: Telekomunikasi) |
-| logo                     | VARCHAR | Path/URL logo perusahaan               |
-| is_mitra                 | BOOLEAN | Apakah termasuk mitra resmi SMK Telkom |
-| website                  | VARCHAR | URL website perusahaan                 |
+| logo                     | VARCHAR | Path/URL logo perusahaan                 |
+| is_mitra                 | BOOLEAN | Apakah termasuk mitra resmi SMK Telkom   |
+| website                  | VARCHAR | URL website perusahaan                   |
 
 ### 4. JURUSAN
 
@@ -124,20 +124,20 @@
 
 #### 7. LOG_AKTIVITAS
 
-| Atribut          | Tipe      | Keterangan                                  |
-| ---------------- | --------- | ------------------------------------------- |
-| **log_id** _(PK)_ | INT       | Primary key                                 |
-| **admin_id** _(FK)_ | INT       | Admin yang melakukan aksi                   |
-| aksi             | VARCHAR   | Jenis aksi (Tambah, Edit, Hapus, Setujui, dll) |
-| detail           | TEXT      | Penjelasan detail aktivitas                 |
-| created_at       | TIMESTAMP | Waktu kejadian                              |
+| Atribut             | Tipe      | Keterangan                                     |
+| ------------------- | --------- | ---------------------------------------------- |
+| **log_id** _(PK)_   | INT       | Primary key                                    |
+| **admin_id** _(FK)_ | INT       | Admin yang melakukan aksi                      |
+| aksi                | VARCHAR   | Jenis aksi (Tambah, Edit, Hapus, Setujui, dll) |
+| detail              | TEXT      | Penjelasan detail aktivitas                    |
+| created_at          | TIMESTAMP | Waktu kejadian                                 |
 
 ## Relasi Antar Entitas
 
-| Relasi                | Kardinalitas                                  | Keterangan                                 |
-| --------------------- | --------------------------------------------- | ------------------------------------------ |
-| PERUSAHAAN — LOWONGAN | One-to-Many                                   | Satu perusahaan bisa punya banyak lowongan |
-| JURUSAN — LOWONGAN    | One-to-Many                                   | Satu jurusan bisa punya banyak lowongan    |
-| ADMIN — LOWONGAN      | One-to-Many                                   | Satu admin bisa memposting banyak lowongan |
-| ADMIN — PPDB          | One-to-Many                                   | Satu admin bisa mengelola banyak info PPDB |
-| ADMIN — LOG_AKTIVITAS  | One-to-Many                                   | Satu admin bisa memiliki banyak catatan aktivitas |
+| Relasi                | Kardinalitas | Keterangan                                        |
+| --------------------- | ------------ | ------------------------------------------------- |
+| PERUSAHAAN — LOWONGAN | One-to-Many  | Satu perusahaan bisa punya banyak lowongan        |
+| JURUSAN — LOWONGAN    | One-to-Many  | Satu jurusan bisa punya banyak lowongan           |
+| ADMIN — LOWONGAN      | One-to-Many  | Satu admin bisa memposting banyak lowongan        |
+| ADMIN — PPDB          | One-to-Many  | Satu admin bisa mengelola banyak info PPDB        |
+| ADMIN — LOG_AKTIVITAS | One-to-Many  | Satu admin bisa memiliki banyak catatan aktivitas |

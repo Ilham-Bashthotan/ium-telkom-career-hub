@@ -11,17 +11,32 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(circle at top right, var(--primary-light), transparent), var(--bg);
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(238, 45, 36, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%);
             margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
         }
         .login-card {
             max-width: 440px;
             width: 100%;
-            padding: 3rem;
-            box-shadow: var(--shadow-lg);
+            padding: 3.5rem 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             background: white;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--line);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -51,7 +66,12 @@
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0;">Password</label>
                     <a href="#" style="font-size: 0.75rem; color: var(--primary); font-weight: 600;">Lupa password?</a>
                 </div>
-                <input type="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="••••••••" required>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 3rem 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="••••••••" required>
+                    <button type="button" onclick="togglePassword()" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                        <i data-lucide="eye" id="eye-icon" style="width: 18px; height: 18px"></i>
+                    </button>
+                </div>
             </div>
             
             <button type="submit" class="btn btn-primary btn-block" style="padding: 0.875rem; width: 100%; font-size: 1rem;">
@@ -67,6 +87,22 @@
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>

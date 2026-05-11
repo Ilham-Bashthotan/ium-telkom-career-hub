@@ -109,7 +109,7 @@
                                 <div class="job-company">{{ $job->perusahaan->nama_perusahaan }}</div>
                             </div>
                         </div>
-                        <span class="pill">{{ $job->jurusan->kode_jurusan }}</span>
+                        <span class="pill">{{ $job->jurusan->kode_jurusan ?? 'Umum' }}</span>
                     </div>
                     <div class="job-meta">
                         <span class="job-tag"><i data-lucide="clock" style="width:12px;height:12px;margin-right:4px"></i> {{ $job->tipe_pekerjaan }}</span>

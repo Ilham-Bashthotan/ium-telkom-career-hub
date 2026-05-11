@@ -327,6 +327,7 @@ a {
   color: var(--secondary);
   transition: all 0.2s ease;
   cursor: pointer;
+  padding: 0.5rem;
 }
 
 .logo-icon:hover {

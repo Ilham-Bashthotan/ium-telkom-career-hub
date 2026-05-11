@@ -58,6 +58,33 @@ class AuthController extends Controller
         return view('user.register');
     }
 
+    public function validateStep(Request $request)
+    {
+        $step = $request->step;
+        $rules = [];
+
+        if ($step == 1) {
+            $rules = [
+                'nama_lengkap' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'no_hp' => 'required|string|max:20',
+            ];
+        } elseif ($step == 2) {
+            $rules = [
+                'is_alumni' => 'required|boolean',
+                'status_pekerjaan' => 'required|string',
+            ];
+        } elseif ($step == 3) {
+            $rules = [
+                'password' => 'required|string|min:8|confirmed',
+            ];
+        }
+
+        $request->validate($rules);
+
+        return response()->json(['success' => true]);
+    }
+
     public function register(Request $request)
     {
         $validated = $request->validate([

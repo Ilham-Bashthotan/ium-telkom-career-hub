@@ -1,11 +1,43 @@
 @extends('layouts.admin')
 
+@push('styles')
+<style>
+    .filter-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.375rem 0.75rem;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+    .filter-pill a {
+        color: var(--muted);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+    .filter-pill a:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+</style>
+@endpush
+
 @section('title', 'Manajemen Mitra Industri')
 
 @section('content')
 <div class="breadcrumb">
     <span>Admin</span>
-    <span>/</span>
+    <i data-lucide="chevron-right" style="width: 12px; height: 12px"></i>
     <span style="color: var(--text); font-weight: 600;">Mitra Industri</span>
 </div>
 
@@ -32,6 +64,43 @@
             <i data-lucide="x" style="width: 16px; height: 16px"></i> Clear
         </button>
     </div>
+
+    @if(request()->anyFilled(['search', 'is_mitra', 'sektor_industri', 'website']))
+    <div style="padding: 1.25rem 1.5rem 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; background: #fcfcfc; border-bottom: 1px solid var(--line);">
+        <div style="font-size: 0.75rem; color: var(--muted); font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin-right: 0.25rem;">
+            <i data-lucide="list-filter" style="width: 14px; height: 14px"></i>
+            FILTER AKTIF:
+        </div>
+        
+        @if(request('search'))
+            <div class="filter-pill">
+                <span>"{{ request('search') }}"</span>
+                <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('is_mitra') !== null && request('is_mitra') !== '')
+            <div class="filter-pill">
+                <span>Status: {{ request('is_mitra') == '1' ? 'Official Partner' : 'Umum' }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['is_mitra' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('sektor_industri'))
+            <div class="filter-pill">
+                <span>Sektor: {{ request('sektor_industri') }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['sektor_industri' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+
+        @if(request('website'))
+            <div class="filter-pill">
+                <span>Website: {{ request('website') }}</span>
+                <a href="{{ request()->fullUrlWithQuery(['website' => null]) }}"><i data-lucide="x" style="width: 12px; height: 12px"></i></a>
+            </div>
+        @endif
+    </div>
+    @endif
 
     <table style="width: 100%; border-collapse: collapse; text-align: left;">
         <thead>
@@ -73,7 +142,7 @@
                         <a href="{{ route('admin.mitra.edit', $mitra->perusahaan_id) }}" class="btn" style="padding: 0.4rem; border-radius: 6px;">
                             <i data-lucide="edit-3" style="width: 16px; height: 16px; color: var(--secondary);"></i>
                         </a>
-                        <form action="{{ route('admin.mitra.destroy', $mitra->perusahaan_id) }}" method="POST" onsubmit="return confirm('Hapus mitra ini?')">
+                        <form action="{{ route('admin.mitra.destroy', $mitra->perusahaan_id) }}" method="POST" onsubmit="return confirmDelete(event, '{{ route('admin.mitra.destroy', $mitra->perusahaan_id) }}')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn" style="padding: 0.4rem; border-radius: 6px; color: #ef4444;">

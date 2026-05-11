@@ -44,7 +44,12 @@
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0;">Password</label>
                     <a href="#" style="font-size: 0.75rem; color: var(--primary); font-weight: 600;">Lupa Password?</a>
                 </div>
-                <input type="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="••••••••" required>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 3rem 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="••••••••" required>
+                    <button type="button" onclick="togglePassword()" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                        <i data-lucide="eye" id="eye-icon" style="width: 18px; height: 18px"></i>
+                    </button>
+                </div>
             </div>
             
             <button type="submit" class="btn btn-primary btn-block" style="padding: 0.875rem; width: 100%;">Masuk Sekarang</button>
@@ -64,6 +69,22 @@
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>

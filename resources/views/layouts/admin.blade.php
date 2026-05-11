@@ -354,15 +354,10 @@
                     <i data-lucide="search"></i> <span>Web Crawler</span>
                 </a>
                 
-                <div style="margin-top: 2rem; padding: 0 1rem; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.1em;">Sistem</div>
-                
-                <a href="#" class="sidebar-link">
-                    <i data-lucide="settings"></i> <span>Pengaturan</span>
-                </a>
             </nav>
 
             <div class="sidebar-footer">
-                <form action="{{ route('logout') }}" method="POST">
+                <form action="{{ route('logout') }}" method="POST" onsubmit="return confirmLogout(event)">
                     @csrf
                     <button type="submit" class="sidebar-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
                         <i data-lucide="log-out"></i> <span>Keluar</span>
@@ -383,9 +378,9 @@
                 </div>
                 
                 <div class="topbar-right" style="display: flex; align-items: center; gap: 1.5rem;">
-                    <div style="position: relative; cursor: pointer;">
-                        <i data-lucide="bell" style="width: 20px; height: 20px; color: var(--muted);"></i>
-                        <span style="position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; border: 2px solid #fff;"></span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--muted);">
+                        <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+                        <span style="font-size: 0.875rem; font-weight: 600;">{{ now()->translatedFormat('d F Y') }}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 0.75rem; padding-left: 1.5rem; border-left: 1px solid var(--line);">
                         <div style="text-align: right;">
@@ -405,6 +400,10 @@
             </div>
         </main>
     </div>
+
+    <x-modal-confirm type="logout" />
+    <x-modal-confirm type="delete" />
+    <x-toast />
 
     <script>
         lucide.createIcons();

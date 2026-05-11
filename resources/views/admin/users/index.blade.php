@@ -14,11 +14,6 @@
         <h1 class="page-title">Daftar Pengguna</h1>
         <p style="color: var(--muted); margin-top: 0.25rem;">Kelola data alumni, siswa, dan admin sistem.</p>
     </div>
-    <div style="display: flex; gap: 1rem;">
-        <button class="btn">
-            <i data-lucide="download" style="width: 16px; height: 16px"></i> Ekspor Data
-        </button>
-    </div>
 </div>
 
 <div class="table-container">
@@ -70,7 +65,7 @@
                         <a href="{{ route('admin.users.show', $user->user_id) }}" class="btn btn-sm" style="padding: 6px;">
                             <i data-lucide="eye" style="width: 14px; height: 14px; color: var(--secondary);"></i>
                         </a>
-                        <form action="{{ route('admin.users.destroy', $user->user_id) }}" method="POST" onsubmit="return confirm('Hapus user ini?')" style="display: inline;">
+                        <form action="{{ route('admin.users.destroy', $user->user_id) }}" method="POST" onsubmit="return confirmDelete(event, '{{ route('admin.users.destroy', $user->user_id) }}')" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm" style="padding: 6px; color: #ef4444;">
