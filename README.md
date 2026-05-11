@@ -20,21 +20,21 @@ Sistem manajemen portal lowongan pekerjaan dan kemitraan industri berbasis web u
 
 Telkom Career Hub dikembangkan untuk memfasilitasi lulusan dan siswa SMK Telkom dalam mencari lowongan pekerjaan, melihat perusahaan mitra, dan memperoleh informasi seputar PPDB. Sistem ini menghubungkan administrator sekolah, perusahaan mitra, dan pengguna (alumni/umum) dalam satu wadah yang terpusat.
 
-Sistem dibangun dalam satu project Laravel dengan pendekatan *server-side rendering* (SSR):
+Sistem dibangun dalam satu project Laravel dengan pendekatan _server-side rendering_ (SSR):
 
-| Bagian | Teknologi | Keterangan |
-|---|---|---|
-| Backend | Laravel | Logika bisnis, autentikasi multi-guard (User & Admin), integrasi database |
-| Frontend | HTML/CSS (Blade) | Tampilan antarmuka web langsung dikelola oleh Laravel Views |
+| Bagian   | Teknologi        | Keterangan                                                                |
+| -------- | ---------------- | ------------------------------------------------------------------------- |
+| Backend  | Laravel          | Logika bisnis, autentikasi multi-guard (User & Admin), integrasi database |
+| Frontend | HTML/CSS (Blade) | Tampilan antarmuka web langsung dikelola oleh Laravel Views               |
 
 ---
 
 ## Fitur Utama
 
-- **Autentikasi Multi-Guard**: Sistem login terpisah untuk *Admin* dan *User* (Alumni/Umum).
+- **Autentikasi Multi-Guard**: Sistem login terpisah untuk _Admin_ dan _User_ (Alumni/Umum).
 - **Manajemen Lowongan**: CRUD lowongan kerja, lengkap dengan detail kualifikasi, gaji, dan relasi jurusan.
 - **Manajemen Perusahaan Mitra**: Pendataan perusahaan mitra sekolah beserta status kerja sama.
-- **Auto Crawler Integration**: Endpoint untuk mendukung sinkronisasi dan penambahan lowongan kerja secara otomatis (crawler).
+- **Crawler Management**: Antarmuka bagi admin untuk memproses dan menyetujui lowongan hasil crawling secara semi-otomatis.
 - **Manajemen PPDB**: Pengelolaan banner dan informasi Penerimaan Peserta Didik Baru.
 - **Log Aktivitas**: Perekaman aktivitas administrator secara otomatis.
 
@@ -49,9 +49,9 @@ ium-telkom-career-hub/
 │   │   └── Controllers/
 │   │       ├── Admin/          # Controller khusus panel Admin (CRUD, Dashboard)
 │   │       ├── User/           # Controller khusus User/Alumni (Home, Profil)
-│   │       ├── AuthController.php 
+│   │       ├── AuthController.php
 │   │       └── HomeController.php
-│   └── Models/                 # Admin, User, Lowongan, Perusahaan, Jurusan, PPDB, dll.
+│   └── Models/                 # Admin, User, Lowongan, Perusahaan, Jurusan, PPDB, SavedLowongan, LogAktifitas.
 ├── database/
 │   ├── migrations/             # Skema database terurut berdasar ERD
 │   └── seeders/                # Dummy data generator
@@ -67,12 +67,12 @@ ium-telkom-career-hub/
 
 ## Requirement
 
-| Komponen | Versi |
-|---|---|
-| PHP | >= 8.2 |
-| Laravel | 11.x |
-| Composer | >= 2.x |
-| SQLite | Built-in (via PHP) |
+| Komponen     | Versi                                          |
+| ------------ | ---------------------------------------------- |
+| PHP          | >= 8.2                                         |
+| Laravel      | 11.x                                           |
+| Composer     | >= 2.x                                         |
+| SQLite       | Built-in (via PHP)                             |
 | Laravel Herd | Opsional (Sangat direkomendasikan untuk lokal) |
 
 ---
@@ -110,6 +110,7 @@ alias composer='/c/Users/NAMA_USER_KAMU/.config/herd/bin/composer.bat'
 **3. Rekomendasi Extension VS Code**
 
 Agar pengalaman coding Laravel makin mulus, instal ekstensi berikut:
+
 - **PHP Intelephense** (Ben Mewburn): Wajib untuk auto-complete dan deteksi error kode PHP.
 - **Laravel Extension Pack** (Winfred Wang): Bundle paket esensial untuk kebutuhan Laravel.
 - **SQLite** (alexcvzz): Untuk melihat dan mengelola isi file database `database.sqlite` langsung dari dalam VS Code.
@@ -162,6 +163,7 @@ php artisan migrate:fresh --seed
 ```bash
 php artisan serve
 ```
+
 Akses di `http://localhost:8000`.
 
 ---
@@ -170,8 +172,8 @@ Akses di `http://localhost:8000`.
 
 Setelah menjalankan proses seeding, kamu dapat mencoba login menggunakan akun dummy berikut:
 
-| Role | Email | Password | Keterangan |
-|---|---|---|---|
-| Admin | `admin@smktelkom.sch.id` | `password123` | Akses penuh dashboard admin |
-| Alumni | `alumni@gmail.com` | `password123` | Mengakses dashboard user/alumni |
-| Umum | `umum@gmail.com` | `password123` | Mengakses dashboard pendaftar umum |
+| Role   | Email                    | Password      | Keterangan                         |
+| ------ | ------------------------ | ------------- | ---------------------------------- |
+| Admin  | `admin@smktelkom.sch.id` | `password123` | Akses penuh dashboard admin        |
+| Alumni | `alumni@gmail.com`       | `password123` | Mengakses dashboard user/alumni    |
+| Umum   | `umum@gmail.com`         | `password123` | Mengakses dashboard pendaftar umum |
