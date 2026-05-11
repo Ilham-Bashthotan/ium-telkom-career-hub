@@ -86,6 +86,11 @@ RUN php artisan storage:link || true
 RUN chown -R www-data:www-data /app
 RUN chmod -R 755 /app
 
+# Startup script untuk menyiapkan APP_KEY, SQLite, migration, dan storage link saat container mulai
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 80
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["apache2-foreground"]
