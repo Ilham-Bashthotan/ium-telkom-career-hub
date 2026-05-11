@@ -10,7 +10,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Runtime stage
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 WORKDIR /app
 
