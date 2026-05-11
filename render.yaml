@@ -1,23 +1,10 @@
 services:
   - type: web
     name: ium-telkom-career-hub
-    env: php
     plan: free
 
-    # Root directory untuk Laravel
-    rootDir: .
-
-    # Build command - install dependencies dan prepare database
-    buildCommand: >-
-      composer install --no-dev --optimize-autoloader &&
-      npm ci &&
-      npm run build &&
-      mkdir -p database &&
-      touch database/database.sqlite &&
-      php artisan migrate --force --no-interaction
-
-    # Start command - jalankan Laravel dengan port dari Render
-    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    # Docker configuration
+    dockerfilePath: ./Dockerfile
 
     # Environment variables
     envVars:
