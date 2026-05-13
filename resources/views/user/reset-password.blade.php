@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password — Telkom Career Hub</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, var(--primary-light), transparent), var(--bg);
+        }
+        .login-card {
+            max-width: 440px;
+            width: 100%;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            background: white;
+            border-radius: var(--radius-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+            <div style="background: var(--primary); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; margin: 0 auto 1.5rem;">T</div>
+            <h1 style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.025em;">Reset Password</h1>
+            <p style="color: var(--muted); font-size: 0.875rem; margin-top: 0.5rem;">Silakan buat password baru untuk akun Anda</p>
+        </div>
+
+        @if ($errors->any())
+            <div style="background: #fef2f2; color: #b91c1c; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.875rem;">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+
+        <form action="{{ route('password.update') }}" method="POST">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+
+            <div style="margin-bottom: 1.5rem;">
+                <label class="form-label" style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Email</label>
+                <input type="email" name="email" class="form-input" style="width: 100%; padding: 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" value="{{ $email ?? old('email') }}" required readonly>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label class="form-label" style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Password Baru</label>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 3rem 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="Minimal 8 karakter" required>
+                    <button type="button" onclick="togglePassword('password', 'eye-icon-1')" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                        <i data-lucide="eye" id="eye-icon-1" style="width: 18px; height: 18px"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <label class="form-label" style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Konfirmasi Password Baru</label>
+                <div style="position: relative;">
+                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" style="width: 100%; padding: 0.875rem 3rem 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="Ulangi password baru" required>
+                    <button type="button" onclick="togglePassword('password_confirmation', 'eye-icon-2')" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
+                        <i data-lucide="eye" id="eye-icon-2" style="width: 18px; height: 18px"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block" style="padding: 0.875rem; width: 100%;">Perbarui Password</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line);">
+            <a href="{{ route('home') }}" style="font-size: 0.875rem; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 0.5rem;"><i data-lucide="arrow-left" style="width: 16px; height: 16px"></i> Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const eyeIcon = document.getElementById(iconId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

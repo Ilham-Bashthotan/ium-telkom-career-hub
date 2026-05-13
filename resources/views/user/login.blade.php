@@ -42,13 +42,24 @@
             <div style="margin-bottom: 2rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0;">Password</label>
-                    <a href="#" style="font-size: 0.75rem; color: var(--primary); font-weight: 600;">Lupa Password?</a>
                 </div>
                 <div style="position: relative;">
                     <input type="password" id="password" name="password" class="form-input" style="width: 100%; padding: 0.875rem 3rem 0.875rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--bg);" placeholder="••••••••" required>
                     <button type="button" onclick="togglePassword()" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); display: flex; align-items: center; padding: 0;">
                         <i data-lucide="eye" id="eye-icon" style="width: 18px; height: 18px"></i>
                     </button>
+                </div>
+                <div style="margin-top: 0.5rem; text-align: right;">
+                    <a 
+                        href="{{ route('forget.password') }}"
+                        style="
+                            font-size: 0.75rem;
+                            color: var(--primary);
+                            font-weight: 600;
+                        "
+                    >
+                        Lupa Password?
+                    </a>
                 </div>
             </div>
             

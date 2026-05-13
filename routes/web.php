@@ -18,6 +18,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/forget-password', [AuthController::class, 'showForgetPassword'])->name('forget.password');
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register/validate', [AuthController::class, 'validateStep'])->name('register.validate');
