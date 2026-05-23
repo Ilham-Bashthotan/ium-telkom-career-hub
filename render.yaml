@@ -1,0 +1,65 @@
+services:
+  - type: web
+    name: ium-telkom-career-hub
+    plan: free
+
+    # Docker configuration
+    dockerfilePath: ./Dockerfile
+
+    # Environment variables
+    envVars:
+      - key: APP_NAME
+        value: "Telkom Career Hub"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        scope: common
+      - key: APP_KEY
+        scope: common
+      - key: APP_LOCALE
+        value: en
+      - key: APP_FALLBACK_LOCALE
+        value: en
+      - key: APP_FAKER_LOCALE
+        value: en_US
+      - key: BCRYPT_ROUNDS
+        value: "12"
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_STACK
+        value: single
+      - key: LOG_LEVEL
+        value: info
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /opt/render/project/src/database/database.sqlite
+      - key: SESSION_DRIVER
+        value: file
+      - key: SESSION_LIFETIME
+        value: "120"
+      - key: SESSION_ENCRYPT
+        value: "false"
+      - key: SESSION_PATH
+        value: /
+      - key: BROADCAST_CONNECTION
+        value: log
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: CACHE_STORE
+        value: file
+      - key: MAIL_MAILER
+        value: log
+      - key: MAIL_FROM_ADDRESS
+        value: "noreply@telkomcareerhub.test"
+      - key: MAIL_FROM_NAME
+        value: "Telkom Career Hub"
+      - key: VITE_APP_NAME
+        value: "Telkom Career Hub"
+
+    # Health check
+    healthCheckPath: /
