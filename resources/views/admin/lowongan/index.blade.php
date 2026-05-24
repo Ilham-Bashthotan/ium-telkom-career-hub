@@ -51,7 +51,7 @@
     </a>
 </div>
 
-<div class="table-container">
+<div class="card" style="padding: 0; overflow: hidden;">
     <div style="padding: 1.5rem; border-bottom: 1px solid var(--line); display: flex; gap: 1rem; align-items: center; background: #fff; flex-wrap: wrap;">
         <div style="position: relative; flex: 1; min-width: 250px;">
             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted);"></i>
@@ -133,8 +133,10 @@
                     <span class="job-tag">{{ $lowongan->tipe_pekerjaan }}</span>
                 </td>
                 <td>
-                    @if($lowongan->status == 'aktif')
+                    @if($lowongan->status === 'aktif')
                         <span class="pill" style="background: #dcfce7; color: #166534;">Aktif</span>
+                    @elseif($lowongan->status === 'draft')
+                        <span class="pill" style="background: #fff7ed; color: #ea580c;">Draft</span>
                     @else
                         <span class="pill" style="background: #fee2e2; color: #991b1b;">Nonaktif</span>
                     @endif

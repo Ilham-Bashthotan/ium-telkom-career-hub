@@ -97,11 +97,11 @@
                 <div class="footer-col-title">Lokasi Kampus</div>
                 <div style="border-radius:12px; overflow:hidden; border:1px solid #334155; height:180px; position:relative; background:#1e293b">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.558356134375!2d107.628469314773!3d-6.943261994983584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e860959074d7%3A0xc3b839600e16807e!2sSMK%20Telkom%20Bandung!5e0!3m2!1sid!2sid!4v1651756543210!5m2!1sid!2sid" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.33405781358!2d107.62461351111666!3d-6.9733256929949615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e9abfaadb37f%3A0x7245c560108cfac8!2sSMK%20Telkom%20Bandung!5e0!3m2!1sid!2sid!4v1716518400000!5m2!1sid!2sid" 
                         width="100%" height="100%" style="border:0; position:absolute; top:0; left:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                     <div style="position:absolute; bottom:10px; right:10px;">
-                        <a href="https://maps.app.goo.gl/hG2o2R2YvK2x7K5t7" target="_blank" class="btn btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(255,255,255,0.9); border:none; box-shadow:var(--shadow-sm)">Buka di Maps</a>
+                        <a href="https://maps.app.goo.gl/HwBpnym8Ne8fHb8WA" target="_blank" class="btn btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(255,255,255,0.9); border:none; box-shadow:var(--shadow-sm)">Buka di Maps</a>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,6 @@
         <i data-lucide="message-circle" style="width: 32px; height: 32px"></i>
     </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         // Initialize Lucide Icons

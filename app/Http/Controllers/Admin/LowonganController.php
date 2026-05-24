@@ -67,14 +67,22 @@ class LowonganController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'link_apply' => 'nullable|url',
+            'deskripsi' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (trim(strip_tags($value)) === '') {
+                        $fail('Deskripsi pekerjaan tidak boleh kosong.');
+                    }
+                }
+            ],
+            'link_apply' => 'required|url',
             'perusahaan_id' => 'required|exists:perusahaans,perusahaan_id',
             'jurusan_id' => 'nullable|exists:jurusans,jurusan_id',
-            'lokasi' => 'nullable|string|max:255',
-            'tipe_pekerjaan' => 'nullable|in:Full-time,Part-time,Internship,Contract',
+            'lokasi' => 'required|string|max:255',
+            'tipe_pekerjaan' => 'required|in:Full-time,Part-time,Internship,Contract',
             'gaji' => 'nullable|string|max:255',
-            'tanggal_expired' => 'nullable|date',
+            'tanggal_expired' => 'required|date',
             'status' => 'required|in:draft,aktif,nonaktif',
         ]);
 
@@ -107,14 +115,22 @@ class LowonganController extends Controller
         
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'link_apply' => 'nullable|url',
+            'deskripsi' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (trim(strip_tags($value)) === '') {
+                        $fail('Deskripsi pekerjaan tidak boleh kosong.');
+                    }
+                }
+            ],
+            'link_apply' => 'required|url',
             'perusahaan_id' => 'required|exists:perusahaans,perusahaan_id',
             'jurusan_id' => 'nullable|exists:jurusans,jurusan_id',
-            'lokasi' => 'nullable|string|max:255',
-            'tipe_pekerjaan' => 'nullable|in:Full-time,Part-time,Internship,Contract',
+            'lokasi' => 'required|string|max:255',
+            'tipe_pekerjaan' => 'required|in:Full-time,Part-time,Internship,Contract',
             'gaji' => 'nullable|string|max:255',
-            'tanggal_expired' => 'nullable|date',
+            'tanggal_expired' => 'required|date',
             'status' => 'required|in:draft,aktif,nonaktif',
         ]);
 

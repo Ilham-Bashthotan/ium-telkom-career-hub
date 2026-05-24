@@ -32,4 +32,5 @@
             <button type="submit" class="btn btn-primary" style="padding-left: 2.5rem; padding-right: 2.5rem;">Perbarui Lowongan</button>
         </div>
     </form>
+</div>
 @endsection

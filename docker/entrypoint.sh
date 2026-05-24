@@ -22,8 +22,10 @@ if [ -z "${APP_KEY:-}" ]; then
   fi
 fi
 
-if [ ! -f database/database.sqlite ]; then
-  touch database/database.sqlite
+if [ ! -f "$DB_DATABASE" ]; then
+  echo "Database file $DB_DATABASE not found. Initializing SQLite..."
+  mkdir -p "$(dirname "$DB_DATABASE")"
+  touch "$DB_DATABASE"
   php artisan migrate --force --no-interaction
   php artisan db:seed --force --no-interaction || true
 fi

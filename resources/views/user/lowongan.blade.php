@@ -117,7 +117,7 @@
                         <span class="job-tag"><i data-lucide="banknote" style="width:12px;height:12px;margin-right:4px"></i> {{ $job->gaji }}</span>
                     </div>
                     <p style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                        {{ $job->deskripsi }}
+                        {{ strip_tags($job->deskripsi) }}
                     </p>
                     <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 1rem; border-top: 1px solid var(--line);">
                         <span style="font-size: 0.75rem; color: var(--muted)">{{ $job->tanggal_posting ? $job->tanggal_posting->diffForHumans() : '-' }}</span>

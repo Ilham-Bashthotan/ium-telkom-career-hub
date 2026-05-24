@@ -279,7 +279,7 @@ onclick="window.location.href='{{ route('user.lowongan.show', $job->lowongan_id)
                     </div>
                     <p
                         style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                        {{ Str::limit($job->deskripsi, 100) }}
+                        {{ Str::limit(strip_tags($job->deskripsi), 100) }}
                     </p>
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--line);">

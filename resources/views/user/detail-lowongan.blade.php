@@ -90,7 +90,7 @@
                     <h2 class="detail-section-title">Informasi Tambahan</h2>
                     <div class="detail-row" style="display:flex; padding: 0.75rem 0; border-bottom: 1px solid var(--line);">
                         <span class="detail-key" style="width: 180px; color: var(--muted); font-size: 0.875rem;">Deadline</span>
-                        <span class="detail-val" style="font-weight: 600;">{{ $lowongan->tanggal_expired ? $lowongan->tanggal_expired->format('d M Y') : '-' }}</span>
+                        <span class="detail-val" style="font-weight: 600;">{{ $lowongan->tanggal_expired ? $lowongan->tanggal_expired->format('d / m / Y') : '-' }}</span>
                     </div>
                     <div class="detail-row" style="display:flex; padding: 0.75rem 0; border-bottom: 1px solid var(--line);">
                         <span class="detail-key" style="width: 180px; color: var(--muted); font-size: 0.875rem;">Sumber</span>
