@@ -1,8 +1,16 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    /* Position toast below the fixed header */
+    .swal2-container.swal2-top-end {
+        top: 85px !important;
+        right: 20px !important;
+    }
+</style>
 <script>
     // SweetAlert2 Toast configuration
     const Toast = Swal.mixin({
         toast: true,
-        position: 'bottom-end',
+        position: 'top-end',
         showConfirmButton: false,
         showCloseButton: true,
         timer: 3000,

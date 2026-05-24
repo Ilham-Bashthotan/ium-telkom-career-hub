@@ -102,7 +102,7 @@
     </div>
     @endif
 
-    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+    <table class="admin-table">
         <thead>
             <tr style="background: #f8fafc; border-bottom: 1px solid var(--line);">
                 <th style="padding: 1rem 1.5rem; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase;">Nama Perusahaan</th>

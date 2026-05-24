@@ -31,8 +31,8 @@
         </div>
 
         <div>
-            <label class="form-label">Lokasi</label>
-            <input type="text" name="lokasi" value="{{ old('lokasi', $lowongan->lokasi ?? '') }}" placeholder="Contoh: Bandung, Jawa Barat (Remote)" class="form-input">
+            <label class="form-label">Lokasi <span style="color: var(--primary)">*</span></label>
+            <input type="text" name="lokasi" id="input-lokasi" value="{{ old('lokasi', $lowongan->lokasi ?? '') }}" required placeholder="Contoh: Bandung, Jawa Barat (Remote)" class="form-input">
         </div>
     </div>
 
@@ -56,8 +56,8 @@
         </div>
 
         <div>
-            <label class="form-label">Batas Pendaftaran</label>
-            <input type="date" name="tanggal_expired" id="tanggal_expired" value="{{ old('tanggal_expired', isset($lowongan) && $lowongan->tanggal_expired ? $lowongan->tanggal_expired->format('Y-m-d') : '') }}" class="form-input">
+            <label class="form-label">Batas Pendaftaran <span style="color: var(--primary)">*</span></label>
+            <input type="text" name="tanggal_expired" id="tanggal_expired" value="{{ old('tanggal_expired', isset($lowongan) && $lowongan->tanggal_expired ? $lowongan->tanggal_expired->format('Y-m-d') : '') }}" required class="form-input" placeholder="dd / mm / yyyy">
         </div>
 
         <div>
@@ -83,8 +83,8 @@
 </div>
 
 <div style="margin-top: 1.5rem;">
-    <label class="form-label">Link Pendaftaran (External)</label>
-    <input type="url" name="link_apply" value="{{ old('link_apply', $lowongan->link_apply ?? '') }}" placeholder="https://perusahaan.com/karir/apply" class="form-input">
+    <label class="form-label">Link Pendaftaran (External) <span style="color: var(--primary)">*</span></label>
+    <input type="url" name="link_apply" id="input-link-apply" value="{{ old('link_apply', $lowongan->link_apply ?? '') }}" required placeholder="https://perusahaan.com/karir/apply" class="form-input">
 </div>
 
 @include('admin.lowongan._scripts')

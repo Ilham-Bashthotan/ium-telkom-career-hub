@@ -70,10 +70,18 @@
                     {{ $mitra->deskripsi }}
                 </p>
                 
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Website</label>
-                    <a href="{{ $mitra->website }}" target="_blank" style="color: var(--primary); font-weight: 600;">{{ $mitra->website ?: 'Tidak tersedia' }}</a>
+                @if($mitra->website)
+                <div style="margin-top: 1.5rem;">
+                    <a href="{{ $mitra->website }}" target="_blank" class="btn btn-primary btn-block" style="text-align: center; justify-content: center; padding: 0.75rem 1rem; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(238, 45, 36, 0.15);">
+                        <i data-lucide="external-link" style="width: 16px; height: 16px"></i> Kunjungi Website
+                    </a>
                 </div>
+                @else
+                <div style="margin-top: 1.5rem;">
+                    <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;">Website</label>
+                    <span style="font-size: 0.875rem; color: var(--muted); font-weight: 500;">Tidak tersedia</span>
+                </div>
+                @endif
             </div>
         </aside>
 

@@ -38,7 +38,7 @@ Route::prefix('user')->name('user.')->group(function () {
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'index'])->name('profil.index');
     Route::post('/profil', [ProfileController::class, 'update'])->name('profil.update');
-    
+
     Route::get('/lowongan/{id}', [UserLowonganController::class, 'show'])->name('lowongan.show');
     Route::post('/lowongan/{id}/save', [UserLowonganController::class, 'toggleSave'])->name('lowongan.save');
     Route::get('/mitra/{id}', [UserPerusahaanController::class, 'show'])->name('mitra.show');
@@ -54,13 +54,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
         return redirect()->route('admin.dashboard');
     });
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::resource('lowongan', AdminLowonganController::class);
     Route::resource('mitra', AdminPerusahaanController::class);
     Route::resource('users', UserController::class);
     Route::resource('ppdb', PPDBController::class);
-    
+
     Route::get('/crawl', [CrawlController::class, 'index'])->name('crawl.index');
     Route::post('/crawl/process', [CrawlController::class, 'process'])->name('crawl.process');
+    Route::get('/crawl/status', [CrawlController::class, 'status'])->name('crawl.status');
     Route::post('/crawl/{id}/approve', [CrawlController::class, 'approve'])->name('crawl.approve');
 });

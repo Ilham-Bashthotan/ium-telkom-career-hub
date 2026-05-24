@@ -19,7 +19,7 @@
     </a>
 </div>
 
-<div class="table-container">
+<div class="card" style="padding: 0; overflow: hidden;">
     <div style="padding: 1.5rem; border-bottom: 1px solid var(--line); display: flex; gap: 1rem; align-items: center; background: #fff; flex-wrap: wrap;">
         <div style="position: relative; flex: 1; min-width: 250px;">
             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted);"></i>
